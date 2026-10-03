@@ -150,7 +150,7 @@ void main() {
 
     expect(
       MediaQuery.textScalerOf(
-        tester.element(find.text('无连接')),
+        tester.element(find.text('暂无连接')),
       ).scale(10),
       16,
     );
@@ -162,7 +162,7 @@ void main() {
 
     expect(
       MediaQuery.textScalerOf(
-        tester.element(find.text('无连接')),
+        tester.element(find.text('暂无连接')),
       ).scale(10),
       20.8,
     );

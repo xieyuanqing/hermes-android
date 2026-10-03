@@ -134,7 +134,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(ChatScreen), findsOneWidget);
-    expect(find.text('New chat'), findsNothing);
+    expect(find.text('新建会话'), findsNothing);
     expect(launchIntents.pendingQuickChat.value, isFalse);
   });
 
@@ -172,9 +172,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('Share to Hermes'), findsOneWidget);
+    expect(find.text('分享至 Hermes'), findsOneWidget);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Continue'));
+    await tester.tap(find.text('继续'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
 
@@ -226,7 +226,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('Share to Hermes'), findsOneWidget);
+    expect(find.text('分享至 Hermes'), findsOneWidget);
     expect(find.text('report.pdf'), findsOneWidget);
     expect(shareIntents.pendingShare.value, isNull);
   });
@@ -296,8 +296,8 @@ void main() {
     await tester.tap(find.byKey(const Key('home_restore_config_button')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Merge'), findsOneWidget);
-    expect(find.text('Replace'), findsOneWidget);
+    expect(find.text('合并'), findsOneWidget);
+    expect(find.text('覆盖替换'), findsOneWidget);
     expect(ConfigImportMode.values, hasLength(2));
   });
 

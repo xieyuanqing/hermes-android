@@ -205,10 +205,10 @@ void main() {
     });
 
     test('bucket labels are human readable', () {
-      expect(ChatDateBucket.today.label, 'Today');
-      expect(ChatDateBucket.yesterday.label, 'Yesterday');
-      expect(ChatDateBucket.thisWeek.label, 'This week');
-      expect(ChatDateBucket.earlier.label, 'Earlier');
+      expect(ChatDateBucket.today.label, '今天');
+      expect(ChatDateBucket.yesterday.label, '昨天');
+      expect(ChatDateBucket.thisWeek.label, '本周');
+      expect(ChatDateBucket.earlier.label, '更早');
     });
   });
 

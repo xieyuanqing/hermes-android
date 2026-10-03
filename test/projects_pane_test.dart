@@ -523,7 +523,7 @@ void main() {
 
     expect(find.byType(SpaceMigrationPreview), findsOneWidget);
     // The one local space matches the server project of the same name.
-    expect(find.textContaining('已匹配 Hermes Android'), findsOneWidget);
+    expect(find.textContaining('匹配到 Hermes Android'), findsOneWidget);
   });
 
   testWidgets('migrates reviewed chats into their server Projects', (

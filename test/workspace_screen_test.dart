@@ -268,7 +268,7 @@ void main() {
     await tester.tap(find.text(HermesDestination.projects.label).last);
     await tester.pumpAndSettle();
 
-    expect(find.text('Review local spaces'), findsOneWidget);
+    expect(find.text('查看本地空间'), findsOneWidget);
   });
 
   testWidgets('opens on Home inside the four-destination shell', (
@@ -567,7 +567,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ErrorState), findsOneWidget);
-    expect(find.textContaining('Desktop Gateway'), findsOneWidget);
+    expect(find.textContaining('桌面 Gateway'), findsOneWidget);
     expect(find.byType(ProjectsPane), findsNothing);
   });
 
@@ -586,9 +586,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ActivityPane), findsOneWidget);
-    expect(find.textContaining('Coming'), findsNothing);
+    expect(find.textContaining('即将'), findsNothing);
     // The empty timeline is a designed calm state, not a placeholder.
-    expect(find.text('Nothing is running'), findsOneWidget);
+    expect(find.text('暂无正在运行的任务'), findsOneWidget);
   });
 
   testWidgets('Home renders the attention digest instead of a placeholder', (
@@ -1096,7 +1096,7 @@ void main() {
 
     expect(opened, isEmpty);
     expect(
-      find.textContaining('Needs a reachable Hermes dashboard'),
+      find.textContaining('需要可访问的 Hermes 仪表盘'),
       findsWidgets,
     );
   });
@@ -1768,7 +1768,7 @@ void main() {
       expect(find.byType(ActivityPane), findsOneWidget);
       expect(find.text(ActivityGroupKind.running.title), findsOneWidget);
       expect(find.text('Deploy ScriptHive'), findsOneWidget);
-      expect(find.textContaining('Coming next'), findsNothing);
+      expect(find.textContaining('即将推出'), findsNothing);
     });
 
     testWidgets('titles rows from the sessions Home already read', (
@@ -1976,7 +1976,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // A single Project skips the picker and opens the chat directly.
-      expect(find.textContaining('New chat · Hermes Android'), findsOneWidget);
+      expect(find.textContaining('新建会话 · Hermes Android'), findsOneWidget);
       expect(assignments, isEmpty);
 
       turnSession.fireSessionBound('new-project-chat', '20260829_stored_42');

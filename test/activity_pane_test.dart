@@ -158,7 +158,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('等待您的输入'), findsOneWidget);
+    // Feed labels are passed through unchanged, including server text.
+    expect(find.text('Waiting for your input'), findsOneWidget);
     // Elapsed time is the whole point of a blocked row: "stuck" without
     // "for how long" is not actionable.
     expect(find.text('7 分钟前'), findsOneWidget);

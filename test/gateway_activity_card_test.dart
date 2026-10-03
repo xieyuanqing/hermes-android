@@ -39,15 +39,15 @@ void main() {
       ),
     ]);
 
-    expect(find.text('Tool activity'), findsOneWidget);
-    expect(find.text('1 completed'), findsOneWidget);
+    expect(find.text('工具活动'), findsOneWidget);
+    expect(find.text('1 个已完成'), findsOneWidget);
     expect(find.text('Build finished'), findsNothing);
 
-    await tester.tap(find.text('Tool activity'));
+    await tester.tap(find.text('工具活动'));
     await tester.pumpAndSettle();
 
     expect(find.text('Build finished'), findsOneWidget);
-    expect(find.text('Completed in 4.2 s'), findsOneWidget);
+    expect(find.text('耗时 4.2 s 完成'), findsOneWidget);
   });
 
   testWidgets('running activity opens automatically', (tester) async {
@@ -60,7 +60,7 @@ void main() {
     ]);
 
     expect(find.text('Opening page'), findsOneWidget);
-    expect(find.text('Running'), findsOneWidget);
+    expect(find.text('运行中'), findsOneWidget);
   });
 
   testWidgets('failure summary is urgent and includes duration', (
@@ -75,10 +75,10 @@ void main() {
       ),
     ]);
 
-    expect(find.text('1 failed • 1 total'), findsOneWidget);
-    await tester.tap(find.text('Tool activity'));
+    expect(find.text('1 个失败 • 共 1 个'), findsOneWidget);
+    await tester.tap(find.text('工具活动'));
     await tester.pumpAndSettle();
-    expect(find.text('Failed after 2.0 s'), findsOneWidget);
+    expect(find.text('耗时 2.0 s 后失败'), findsOneWidget);
   });
 
   testWidgets('survives large text without overflow', (tester) async {
