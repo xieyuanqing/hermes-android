@@ -143,20 +143,20 @@ class _FilesScreenState extends State<FilesScreen> {
         await saver(download);
       } else {
         await FilePicker.platform.saveFile(
-          dialogTitle: 'Save ${download.filename}',
+          dialogTitle: '保存 ${download.filename}',
           fileName: download.filename,
           bytes: download.bytes,
         );
       }
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${download.filename} downloaded')),
+        SnackBar(content: Text('${download.filename} 已下载')),
       );
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Download failed: $error')));
+      ).showSnackBar(SnackBar(content: Text('下载失败：$error')));
     } finally {
       if (mounted) setState(() => _downloading = false);
     }
@@ -167,8 +167,8 @@ class _FilesScreenState extends State<FilesScreen> {
       return const Center(
         child: EmptyState(
           icon: Icons.folder_open_outlined,
-          title: 'Folder is empty',
-          message: 'There are no visible files in this server folder.',
+          title: '文件夹为空',
+          message: '此服务器文件夹中没有可见文件。',
         ),
       );
     }
@@ -227,7 +227,7 @@ class _FilesScreenState extends State<FilesScreen> {
               if (preview?.truncated == true)
                 const StatusChip(
                   status: HermesStatus.blocked,
-                  label: 'Preview truncated',
+                  label: '预览已截断',
                 ),
             ],
           ),
@@ -237,8 +237,8 @@ class _FilesScreenState extends State<FilesScreen> {
               child: SingleChildScrollView(
                 child: SelectableText(
                   preview?.binary == true
-                      ? 'Binary preview is unavailable. Download the file to open it.'
-                      : preview?.text ?? 'Preview unavailable',
+                      ? '二进制预览不可用。请下载文件后打开。'
+                      : preview?.text ?? '预览不可用',
                   style: tokens.typography.body.copyWith(
                     fontFamily: 'monospace',
                     color: tokens.onSurface,
@@ -254,7 +254,7 @@ class _FilesScreenState extends State<FilesScreen> {
                 child: OutlinedButton.icon(
                   onPressed: _downloading ? null : _download,
                   icon: const Icon(Icons.download_outlined),
-                  label: const Text('Download'),
+                  label: const Text('下载'),
                 ),
               ),
               if (widget.onAddToChat != null) ...[
@@ -265,12 +265,12 @@ class _FilesScreenState extends State<FilesScreen> {
                       widget.onAddToChat!(selected.path);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('File reference added to chat'),
+                          content: Text('已添加文件引用至会话'),
                         ),
                       );
                     },
                     icon: const Icon(Icons.add_comment_outlined),
-                    label: const Text('Add to chat'),
+                    label: const Text('添加至会话'),
                   ),
                 ),
               ],
@@ -287,9 +287,9 @@ class _FilesScreenState extends State<FilesScreen> {
       return Center(
         child: ErrorState(
           title: _selected == null
-              ? 'Could not load files'
-              : 'Could not preview file',
-          message: 'Check the Dashboard connection and try again.',
+              ? '无法加载文件'
+              : '无法预览文件',
+          message: '请检查仪表盘连接并重试。',
           onRetry: _selected == null
               ? () => unawaited(
                   _path == null ? _loadRoot() : _openDirectory(_path!),
@@ -305,7 +305,7 @@ class _FilesScreenState extends State<FilesScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: IconButton(onPressed: _back, icon: const Icon(Icons.arrow_back)),
-      title: const Text('Files'),
+      title: const Text('文件'),
       bottom: _selected == null && _path != null
           ? PreferredSize(
               preferredSize: const Size.fromHeight(42),

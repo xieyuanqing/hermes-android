@@ -70,8 +70,8 @@ void main() {
       );
       expect(tester.takeException(), isNull);
 
-      expect(find.byTooltip('Move attachment previous'), findsNWidgets(2));
-      expect(find.byTooltip('Move attachment next'), findsNWidgets(2));
+      expect(find.byTooltip('上移附件'), findsNWidgets(2));
+      expect(find.byTooltip('下移附件'), findsNWidgets(2));
       final previousButtons = find.widgetWithIcon(
         IconButton,
         Icons.arrow_upward,
@@ -94,9 +94,9 @@ void main() {
       );
       expect(
         tester
-            .getSemantics(find.bySemanticsLabel('Move attachment next').first)
+            .getSemantics(find.bySemanticsLabel('下移附件').first)
             .label,
-        contains('Move attachment next'),
+        contains('下移附件'),
       );
 
       await tester.tap(nextButtons.at(0));
@@ -145,10 +145,10 @@ void main() {
     );
 
     final attachment = tester.getSemantics(
-      find.bySemanticsLabel('Attachment 1 of 1'),
+      find.bySemanticsLabel('附件 1 / 1'),
     );
-    expect(attachment.value, 'Upload failed');
-    expect(find.bySemanticsLabel('Retry upload'), findsOneWidget);
+    expect(attachment.value, '上传失败');
+    expect(find.bySemanticsLabel('重试上传'), findsOneWidget);
     expect(find.bySemanticsLabel(sensitiveName), findsNothing);
     final retry = find.widgetWithIcon(IconButton, Icons.refresh);
     expect(tester.getSize(retry), const Size(48, 48));
@@ -179,8 +179,8 @@ void main() {
       ),
     );
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Attachment 1 of 1')).value,
-      'Uploading',
+      tester.getSemantics(find.bySemanticsLabel('附件 1 / 1')).value,
+      '上传中',
     );
     semantics.dispose();
   });

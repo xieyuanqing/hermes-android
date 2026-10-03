@@ -43,7 +43,7 @@ void main() {
 
       expect(activity!.phase, GatewayToolActivityPhase.completed);
       expect(activity.detail, 'Found the official activity contract');
-      expect(activity.statusLabel, 'Completed in 420 ms');
+      expect(activity.statusLabel, '耗时 420 ms 完成');
     });
 
     test('uses the error as the safe failure summary', () {
@@ -56,7 +56,7 @@ void main() {
 
       expect(activity!.phase, GatewayToolActivityPhase.failed);
       expect(activity.detail, 'Synthetic command failed');
-      expect(activity.statusLabel, 'Failed');
+      expect(activity.statusLabel, '失败');
     });
 
     test('keeps compatibility with legacy REST progress fields', () {
@@ -101,7 +101,7 @@ void main() {
 
       expect(thinking!.kind, 'thinking');
       expect(thinking.text, 'Planning the next step');
-      expect(compacting!.text, 'Compacting conversation context…');
+      expect(compacting!.text, '正在压缩会话上下文…');
     });
   });
 
@@ -127,9 +127,9 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('Tool activity'), findsOneWidget);
+      expect(find.text('工具活动'), findsOneWidget);
       expect(find.textContaining('Search files'), findsOneWidget);
-      expect(find.text('Working'), findsOneWidget);
+      expect(find.text('处理中'), findsOneWidget);
       expect(find.text('Scanning gateway event handlers'), findsOneWidget);
     });
 
@@ -155,9 +155,9 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('1 failed • 1 total'), findsOneWidget);
+      expect(find.text('1 个失败 • 共 1 个'), findsOneWidget);
       expect(find.textContaining('Terminal'), findsOneWidget);
-      expect(find.text('Failed'), findsOneWidget);
+      expect(find.text('失败'), findsOneWidget);
       expect(find.text('Synthetic command failed'), findsOneWidget);
     });
     testWidgets('expanded tool card exposes duration and full safe output', (
@@ -186,7 +186,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Completed in 1.3 s'), findsOneWidget);
+      expect(find.text('耗时 1.3 s 完成'), findsOneWidget);
       final detailWidget = tester.widget<Text>(find.text(detail));
       expect(detailWidget.maxLines, isNull);
     });

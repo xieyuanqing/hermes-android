@@ -47,7 +47,7 @@ void main() {
       );
 
       await tester.enterText(find.byType(TextField), 'Retry this prompt');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
 
@@ -59,7 +59,7 @@ void main() {
       );
       expect(
         find.text(
-          'Send failed: JsonRpcError(prompt.submit): '
+          '发送失败：JsonRpcError(prompt.submit): '
           'Desktop gateway connection closed',
         ),
         findsOneWidget,
@@ -68,20 +68,20 @@ void main() {
         tester.widget<TextField>(find.byType(TextField)).controller!.text,
         'Retry this prompt',
       );
-      expect(find.bySemanticsLabel('Attachment 1 of 3'), findsOneWidget);
-      expect(find.bySemanticsLabel('Attachment 2 of 3'), findsOneWidget);
-      expect(find.bySemanticsLabel('Attachment 3 of 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 1 / 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 2 / 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 3 / 3'), findsOneWidget);
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Attachment 1 of 3')).value,
-        'Uploaded',
+        tester.getSemantics(find.bySemanticsLabel('附件 1 / 3')).value,
+        '已上传',
       );
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Attachment 2 of 3')).value,
-        'Uploaded',
+        tester.getSemantics(find.bySemanticsLabel('附件 2 / 3')).value,
+        '已上传',
       );
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Attachment 3 of 3')).value,
-        'Uploaded',
+        tester.getSemantics(find.bySemanticsLabel('附件 3 / 3')).value,
+        '已上传',
       );
       expect(find.text('first.txt'), findsOneWidget);
       expect(find.text('second.txt'), findsOneWidget);
@@ -111,9 +111,9 @@ void main() {
         tester.widget<TextField>(find.byType(TextField)).controller!.text,
         'Retry this prompt',
       );
-      expect(find.bySemanticsLabel('Attachment 1 of 3'), findsOneWidget);
-      expect(find.bySemanticsLabel('Attachment 2 of 3'), findsOneWidget);
-      expect(find.bySemanticsLabel('Attachment 3 of 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 1 / 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 2 / 3'), findsOneWidget);
+      expect(find.bySemanticsLabel('附件 3 / 3'), findsOneWidget);
       expect(
         tester
             .widget<IconButton>(find.widgetWithIcon(IconButton, Icons.send))

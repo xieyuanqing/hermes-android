@@ -162,7 +162,7 @@ void main() {
 
     expect(find.byType(EmptyState), findsOneWidget);
     expect(find.byType(ErrorState), findsNothing);
-    expect(find.textContaining('Nothing needs you'), findsOneWidget);
+    expect(find.textContaining('无需处理'), findsOneWidget);
   });
 
   testWidgets('a first read that fails offers a retry that recovers', (
@@ -181,7 +181,7 @@ void main() {
 
     expect(find.byType(ErrorState), findsOneWidget);
 
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('重试'));
     await tester.pumpAndSettle();
 
     expect(calls, 2);
@@ -215,7 +215,7 @@ void main() {
       // Losing the network must never blank the screen the user relies on.
       expect(find.text('Roadmap'), findsOneWidget);
       expect(find.byType(ErrorState), findsNothing);
-      expect(find.textContaining('Offline'), findsOneWidget);
+      expect(find.textContaining('离线'), findsOneWidget);
     },
   );
 
@@ -237,7 +237,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('2 more'), findsOneWidget);
+    expect(find.textContaining('2 项'), findsOneWidget);
   });
 
   testWidgets('tapping a row reports the session to the host', (tester) async {

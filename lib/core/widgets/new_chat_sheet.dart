@@ -41,7 +41,7 @@ class NewChatSheet extends StatelessWidget {
               HermesSpacing.sm,
             ),
             child: Text(
-              'Start something new',
+              '开启新会话',
               style: tokens.typography.title.copyWith(color: tokens.onSurface),
             ),
           ),
@@ -94,7 +94,7 @@ class ProjectPickerSheet extends StatelessWidget {
               HermesSpacing.sm,
             ),
             child: Text(
-              'Which project?',
+              '选择项目',
               style: tokens.typography.title.copyWith(color: tokens.onSurface),
             ),
           ),

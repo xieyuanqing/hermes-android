@@ -96,7 +96,7 @@ void main() {
       );
 
       expect(exported, isFalse);
-      expect(find.text('The two passphrases do not match.'), findsOneWidget);
+      expect(find.text('两次输入的密码不一致。'), findsOneWidget);
     });
 
     testWidgets('refuses a passphrase that is too short to protect keys', (
@@ -117,7 +117,7 @@ void main() {
       await completeExportSheet(tester, passphrase: 'short');
 
       expect(exported, isFalse);
-      expect(find.text('Use at least 8 characters.'), findsOneWidget);
+      expect(find.text('使用至少 8 个字符。'), findsOneWidget);
     });
 
     testWidgets('hands the encrypted blob to the delivery callback', (
@@ -139,7 +139,7 @@ void main() {
       await completeExportSheet(tester, passphrase: 'correct horse');
 
       expect(delivered, 'encrypted-blob');
-      expect(find.text('Backup exported — Saved to Downloads'), findsOneWidget);
+      expect(find.text('备份已导出 — Saved to Downloads'), findsOneWidget);
     });
 
     testWidgets('surfaces an export failure instead of failing silently', (
@@ -224,7 +224,7 @@ void main() {
       expect(seenPassphrase, 'correct horse');
       expect(seenMode, ConfigImportMode.merge);
       expect(
-        find.text('Connections: 2 added · 5 settings restored'),
+        find.text('连接：2 个新增 · 已恢复 5 项设置'),
         findsOneWidget,
       );
     });
@@ -263,7 +263,7 @@ void main() {
         wrap(
           buildCard(
             onImport: (_, _, _) async => throw const ConfigBackupException(
-              'Wrong passphrase, or this backup file has been altered.',
+              '密码错误，或此备份文件已被篡改。',
             ),
           ),
         ),
@@ -280,7 +280,7 @@ void main() {
 
       expect(find.byKey(const Key('config_backup_error')), findsOneWidget);
       expect(
-        find.text('Wrong passphrase, or this backup file has been altered.'),
+        find.text('密码错误，或此备份文件已被篡改。'),
         findsOneWidget,
       );
     });
@@ -305,7 +305,7 @@ void main() {
 
       expect(imported, isFalse);
       expect(
-        find.text('Enter the passphrase for this backup.'),
+        find.text('请输入此备份的密码。'),
         findsOneWidget,
       );
     });

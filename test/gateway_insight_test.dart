@@ -54,9 +54,9 @@ void main() {
       })!;
 
       expect(background.kind, GatewayNoticeKind.background);
-      expect(background.title, 'Background task bg-7 completed');
+      expect(background.title, '后台任务 bg-7 已完成');
       expect(review.kind, GatewayNoticeKind.review);
-      expect(review.title, 'Hermes review');
+      expect(review.title, 'Hermes 评审');
     });
   });
 
@@ -157,12 +157,12 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Reasoning'), findsOneWidget);
+    expect(find.text('思考过程'), findsOneWidget);
     expect(
       find.text('Verified the complete gateway contract.'),
       findsOneWidget,
     );
-    expect(find.text('Background task bg-7 completed'), findsOneWidget);
+    expect(find.text('后台任务 bg-7 已完成'), findsOneWidget);
     expect(find.byType(SelectionArea), findsNWidgets(2));
   });
 
@@ -183,7 +183,7 @@ void main() {
       ),
     );
 
-    expect(find.text('1 delegated task(s) active'), findsOneWidget);
+    expect(find.text('1 个委派任务进行中'), findsOneWidget);
     expect(find.text('Inspect Android transport'), findsOneWidget);
   });
 }

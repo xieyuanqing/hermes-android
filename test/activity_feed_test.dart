@@ -129,10 +129,10 @@ void main() {
       ActivityGroupKind.completed,
     ]);
     expect(feed.groups.map((group) => group.title), [
-      'Needs you',
-      'Running now',
-      'Failed',
-      'Completed',
+      '需要您处理',
+      '正在运行',
+      '失败',
+      '已完成',
     ]);
   });
 
@@ -160,7 +160,7 @@ void main() {
 
     final item = _group(feed, ActivityGroupKind.needsYou).items.single;
     expect(item.sessionId, 'session-a');
-    expect(item.label, 'Waiting for your input');
+    expect(item.label, '等待您的输入');
     expect(item.status, HermesStatus.blocked);
     expect(feed.blockedCount, 1);
   });
@@ -172,7 +172,7 @@ void main() {
     final feed = _feed([binding], [_entry(binding: binding)]);
 
     final item = _group(feed, ActivityGroupKind.running).items.single;
-    expect(item.label, 'Submitted, waiting for Hermes');
+    expect(item.label, '已提交，等待 Hermes');
     expect(item.status, HermesStatus.running);
     expect(item.turnId, isNull);
     expect(feed.runningCount, 1);
@@ -195,7 +195,7 @@ void main() {
     );
 
     final item = _group(feed, ActivityGroupKind.failed).items.single;
-    expect(item.label, 'Turn recovery failed');
+    expect(item.label, '轮次恢复失败');
     expect(item.status, HermesStatus.failed);
   });
 
@@ -207,7 +207,7 @@ void main() {
     );
 
     final item = _group(feed, ActivityGroupKind.completed).items.single;
-    expect(item.label, 'Stopped');
+    expect(item.label, '已停止');
     expect(item.status, HermesStatus.idle);
   });
 
@@ -228,7 +228,7 @@ void main() {
     );
 
     final item = _group(feed, ActivityGroupKind.failed).items.single;
-    expect(item.label, 'Stalled — no update from Hermes');
+    expect(item.label, '已停滞 — Hermes 无更新');
     expect(feed.runningCount, 0);
   });
 

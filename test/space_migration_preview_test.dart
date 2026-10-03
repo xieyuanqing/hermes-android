@@ -64,8 +64,8 @@ void main() {
     await _pump(tester, plan);
 
     expect(find.text('ScriptHive'), findsOneWidget);
-    expect(find.textContaining('Matches'), findsOneWidget);
-    expect(find.textContaining('4 chats'), findsOneWidget);
+    expect(find.textContaining('匹配到'), findsOneWidget);
+    expect(find.textContaining('4 个已分配会话'), findsOneWidget);
   });
 
   testWidgets('marks a space with no server match as a new project', (
@@ -82,7 +82,7 @@ void main() {
     await _pump(tester, plan);
 
     expect(find.text('C-MAY'), findsOneWidget);
-    expect(find.textContaining('New project'), findsOneWidget);
+    expect(find.textContaining('新建项目'), findsOneWidget);
   });
 
   testWidgets('summarizes what the migration would do', (tester) async {
@@ -101,9 +101,9 @@ void main() {
 
     await _pump(tester, plan);
 
-    expect(find.textContaining('2 spaces'), findsOneWidget);
-    expect(find.textContaining('7 chats'), findsOneWidget);
-    expect(find.textContaining('1 project'), findsOneWidget);
+    expect(find.textContaining('2 个空间'), findsOneWidget);
+    expect(find.textContaining('7 个会话'), findsOneWidget);
+    expect(find.textContaining('1 个项目'), findsOneWidget);
   });
 
   testWidgets('states plainly that nothing has been changed yet', (
@@ -119,10 +119,10 @@ void main() {
 
     await _pump(tester, plan);
 
-    expect(find.textContaining('Nothing has moved yet'), findsOneWidget);
+    expect(find.textContaining('尚未移动任何内容'), findsOneWidget);
     // The read-only preview must not offer a migrate button while the write
     // half of the migration is unimplemented.
-    expect(find.widgetWithText(FilledButton, 'Migrate'), findsNothing);
+    expect(find.widgetWithText(FilledButton, '迁移'), findsNothing);
   });
 
   testWidgets('executes the reviewed plan and reports full success', (
@@ -151,12 +151,12 @@ void main() {
         );
       },
     );
-    await tester.tap(find.widgetWithText(FilledButton, 'Migrate'));
+    await tester.tap(find.widgetWithText(FilledButton, '迁移'));
     await tester.pumpAndSettle();
 
     expect(calls, 1);
-    expect(find.textContaining('2 chats migrated'), findsOneWidget);
-    expect(find.text('Migration complete'), findsOneWidget);
+    expect(find.textContaining('已迁移 2 个会话'), findsOneWidget);
+    expect(find.text('迁移完成'), findsOneWidget);
   });
 
   testWidgets('reports a partial migration without hiding local data', (
@@ -181,12 +181,12 @@ void main() {
         failures: {'Legacy/chat-1': StateError('unsupported')},
       ),
     );
-    await tester.tap(find.widgetWithText(FilledButton, 'Migrate'));
+    await tester.tap(find.widgetWithText(FilledButton, '迁移'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Migration incomplete'), findsOneWidget);
+    expect(find.text('迁移未完全完成'), findsOneWidget);
     expect(
-      find.textContaining('2 chats stayed in local Spaces'),
+      find.textContaining('2 个会话仍保留在本地空间中'),
       findsOneWidget,
     );
   });
@@ -196,7 +196,7 @@ void main() {
   ) async {
     await _pump(tester, const SpaceMigrationPlan([]));
 
-    expect(find.textContaining('No local spaces'), findsOneWidget);
+    expect(find.textContaining('未找到此连接的本地空间'), findsOneWidget);
   });
 
   testWidgets('dismiss reports back to the caller', (tester) async {
@@ -210,7 +210,7 @@ void main() {
     ]);
 
     await _pump(tester, plan, onDismiss: () => dismissed++);
-    await tester.tap(find.text('Close'));
+    await tester.tap(find.text('关闭'));
     await tester.pumpAndSettle();
 
     expect(dismissed, 1);

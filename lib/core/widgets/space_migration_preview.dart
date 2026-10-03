@@ -38,18 +38,15 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
   SpaceMigrationResult? _result;
   Object? _error;
 
-  static String _chats(int count) => count == 1 ? '1 chat' : '$count chats';
+  static String _chats(int count) => '$count 个会话';
 
   String get _summary {
     final plan = widget.plan;
-    final spaces = plan.entries.length == 1
-        ? '1 space'
-        : '${plan.entries.length} spaces';
+    final spaces = '${plan.entries.length} 个空间';
     final toCreate = plan.projectsToCreate;
     final projects = switch (toCreate) {
-      0 => 'no new projects needed',
-      1 => '1 project to create',
-      _ => '$toCreate projects to create',
+      0 => '无需新建项目',
+      _ => '需新建 $toCreate 个项目',
     };
     return '$spaces · ${_chats(plan.sessionsToLink)} · $projects';
   }
@@ -84,13 +81,12 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
         children: [
           const EmptyState(
             icon: Icons.swap_horiz_rounded,
-            title: 'Nothing to migrate',
+            title: '无需迁移',
             message:
-                'No local spaces were found for this connection, so Projects '
-                'are already the only organization in use here.',
+                '未找到此连接的本地空间，项目已经是此处唯一使用的组织方式。',
           ),
           if (widget.onDismiss != null)
-            TextButton(onPressed: widget.onDismiss, child: const Text('Close')),
+            TextButton(onPressed: widget.onDismiss, child: const Text('关闭')),
         ],
       );
     }
@@ -98,7 +94,7 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
     return ListView(
       padding: const EdgeInsets.only(bottom: HermesSpacing.xl),
       children: [
-        const SectionHeader(title: 'Migration preview'),
+        const SectionHeader(title: '迁移预览'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: HermesSpacing.lg),
           child: Text(
@@ -110,7 +106,7 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: HermesSpacing.lg),
           child: Text(
-            'Nothing has moved yet — this is only what a migration would do.',
+            '尚未移动任何内容 — 这只是迁移将要执行的操作。',
             style: tokens.typography.label.copyWith(color: tokens.muted),
           ),
         ),
@@ -124,22 +120,22 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
                 children: [
                   Text(
                     result.isComplete
-                        ? 'Migration complete'
-                        : 'Migration incomplete',
+                        ? '迁移完成'
+                        : '迁移未完全完成',
                     style: tokens.typography.section.copyWith(
                       color: tokens.onSurface,
                     ),
                   ),
                   const SizedBox(height: HermesSpacing.xs),
                   Text(
-                    '${result.linkedSessions} chats migrated · '
-                    '${result.createdProjects} projects created',
+                    '已迁移 ${result.linkedSessions} 个会话 · '
+                    '已创建 ${result.createdProjects} 个项目',
                     style: tokens.typography.body.copyWith(color: tokens.muted),
                   ),
                   if (result.unlinkedSessions > 0)
                     Text(
-                      '${result.unlinkedSessions} chats stayed in local Spaces '
-                      'and can be retried safely.',
+                      '${result.unlinkedSessions} 个会话仍保留在本地空间中，'
+                      '可以安全重试。',
                       style: tokens.typography.body.copyWith(
                         color: tokens.muted,
                       ),
@@ -154,7 +150,7 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: HermesSpacing.lg),
             child: Text(
-              'Migration failed. Local Spaces were kept unchanged.',
+              '迁移失败。本地空间保持不变。',
               style: tokens.typography.body.copyWith(color: tokens.danger),
             ),
           ),
@@ -181,7 +177,7 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.swap_horiz_rounded),
-              label: Text(_migrating ? 'Migrating…' : 'Migrate'),
+              label: Text(_migrating ? '迁移中…' : '迁移'),
             ),
           ),
         if (widget.onDismiss != null)
@@ -189,7 +185,7 @@ class _SpaceMigrationPreviewState extends State<SpaceMigrationPreview> {
             padding: const EdgeInsets.symmetric(horizontal: HermesSpacing.lg),
             child: TextButton(
               onPressed: _migrating ? null : widget.onDismiss,
-              child: const Text('Close'),
+              child: const Text('关闭'),
             ),
           ),
       ],
@@ -206,9 +202,7 @@ class _EntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = HermesTokens.of(context);
     final matched = entry.matchedProject;
-    final assigned = entry.sessionCount == 1
-        ? '1 assigned chat'
-        : '${entry.sessionCount} assigned chats';
+    final assigned = '${entry.sessionCount} 个已分配会话';
 
     return HermesCard(
       child: Column(
@@ -232,15 +226,15 @@ class _EntryCard extends StatelessWidget {
                 status: matched == null
                     ? HermesStatus.blocked
                     : HermesStatus.completed,
-                label: matched == null ? 'New project' : 'Matched',
+                label: matched == null ? '新建项目' : '已匹配',
               ),
             ],
           ),
           const SizedBox(height: HermesSpacing.xs),
           Text(
             matched == null
-                ? 'No server project matches this name · $assigned'
-                : 'Matches ${matched.name} · $assigned',
+                ? '无匹配此名称的服务器项目 · $assigned'
+                : '匹配到 ${matched.name} · $assigned',
             style: tokens.typography.body.copyWith(color: tokens.muted),
           ),
         ],

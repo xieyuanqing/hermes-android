@@ -41,19 +41,19 @@ class GatewayToolActivity {
   String get statusLabel {
     switch (phase) {
       case GatewayToolActivityPhase.running:
-        return 'Running';
+        return '运行中';
       case GatewayToolActivityPhase.generating:
-        return 'Preparing';
+        return '准备中';
       case GatewayToolActivityPhase.progress:
-        return 'Working';
+        return '处理中';
       case GatewayToolActivityPhase.completed:
         return durationSeconds == null
-            ? 'Completed'
-            : 'Completed in ${_formatDuration(durationSeconds!)}';
+            ? '已完成'
+            : '耗时 ${_formatDuration(durationSeconds!)} 完成';
       case GatewayToolActivityPhase.failed:
         return durationSeconds == null
-            ? 'Failed'
-            : 'Failed after ${_formatDuration(durationSeconds!)}';
+            ? '失败'
+            : '耗时 ${_formatDuration(durationSeconds!)} 后失败';
     }
   }
 
@@ -214,9 +214,9 @@ class GatewayTurnStatus {
   static String? _fallbackText(String kind) {
     switch (kind) {
       case 'compacting':
-        return 'Compacting conversation context…';
+        return '正在压缩会话上下文…';
       case 'compacted':
-        return 'Conversation context compacted';
+        return '会话上下文已压缩';
       default:
         return null;
     }

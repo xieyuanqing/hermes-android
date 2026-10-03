@@ -158,19 +158,18 @@ class _ProjectsPaneState extends State<ProjectsPane> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text('Archive ${project.name}?'),
+        title: Text('归档 ${project.name}？'),
         content: const Text(
-          'The Project will move to Archived. Its chats and files stay intact, '
-          'and you can restore it at any time.',
+          '该项目将移至已归档。其会话和文件将保持不变，您可以随时恢复。',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Archive'),
+            child: const Text('归档'),
           ),
         ],
       ),
@@ -192,8 +191,15 @@ class _ProjectsPaneState extends State<ProjectsPane> {
   }
 
   void _showMutationError(String action, Object error) {
+    final actionZh = switch (action) {
+      'create' => '创建',
+      'rename' => '重命名',
+      'archive' => '归档',
+      'restore' => '恢复',
+      _ => action,
+    };
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Could not $action the project: $error')),
+      SnackBar(content: Text('无法$actionZh项目: $error')),
     );
   }
 
@@ -222,9 +228,9 @@ class _ProjectsPaneState extends State<ProjectsPane> {
 
     if (view.projects.isEmpty && view.error != null) {
       return ErrorState(
-        title: 'Could not reach Hermes',
+        title: '无法连接到 Hermes',
         message:
-            'Check that the gateway is running and reachable, then try again.',
+            '请检查 Gateway 是否正在运行且可访问，然后重试。',
         onRetry: _refresh,
       );
     }
@@ -237,11 +243,10 @@ class _ProjectsPaneState extends State<ProjectsPane> {
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.12),
             EmptyState(
               icon: Icons.folder_outlined,
-              title: 'No projects yet',
+              title: '暂无项目',
               message:
-                  'Projects group related chats, files, and activity, and stay '
-                  'in sync with Hermes on your computer.',
-              actionLabel: 'Create a project',
+                  '项目用于组织相关的会话、文件和动态，并与您电脑上的 Hermes 保持同步。',
+              actionLabel: '创建项目',
               onAction: _createProject,
             ),
           ],
@@ -253,7 +258,7 @@ class _ProjectsPaneState extends State<ProjectsPane> {
       backgroundColor: tokens.surface,
       floatingActionButton: FloatingActionButton(
         onPressed: _createProject,
-        tooltip: 'New project',
+        tooltip: '新建项目',
         child: const Icon(Icons.add),
       ),
       body: RefreshIndicator(
@@ -263,9 +268,9 @@ class _ProjectsPaneState extends State<ProjectsPane> {
           children: [
             if (view.isStale) _OfflineBanner(error: view.error),
             SectionHeader(
-              title: 'Projects',
+              title: '项目',
               count: view.projects.length,
-              actionLabel: _hasLocalSpaces ? 'Review local spaces' : null,
+              actionLabel: _hasLocalSpaces ? '查看本地空间' : null,
               onAction: _hasLocalSpaces ? _showMigrationPreview : null,
             ),
             for (final project in view.projects)
@@ -286,7 +291,7 @@ class _ProjectsPaneState extends State<ProjectsPane> {
                 ),
               ),
             if (view.archived.isNotEmpty) ...[
-              SectionHeader(title: 'Archived', count: view.archived.length),
+              SectionHeader(title: '已归档', count: view.archived.length),
               for (final project in view.archived)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -323,9 +328,7 @@ class _CompatibilityMode extends StatelessWidget {
   const _CompatibilityMode({required this.spaces, required this.onRetry});
 
   static const _explanation =
-      'This Hermes gateway is older than server-side projects, so chats stay '
-      'grouped on this device only. Update Hermes to share the same projects '
-      'across your devices.';
+      '此 Hermes Gateway 版本早于服务端项目，因此会话仅在此设备上分组。更新 Hermes 即可在您的设备之间共享相同的项目。';
 
   @override
   Widget build(BuildContext context) {
@@ -343,7 +346,7 @@ class _CompatibilityMode extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.only(bottom: HermesSpacing.xl),
         children: [
-          const SectionHeader(title: 'Compatibility mode'),
+          const SectionHeader(title: '兼容模式'),
           Padding(
             padding: const EdgeInsets.fromLTRB(
               HermesSpacing.lg,
@@ -374,13 +377,12 @@ class _CompatibilityMode extends StatelessWidget {
           if (localSpaces.isEmpty)
             const EmptyState(
               icon: Icons.folder_outlined,
-              title: 'No spaces on this device',
+              title: '此设备上暂无空间',
               message:
-                  'Chats from this gateway are not grouped yet. Grouping '
-                  'stays on this phone until the gateway can host projects.',
+                  '此 Gateway 的会话尚未分组。在 Gateway 支持托管项目之前，分组将仅保留在手机上。',
             )
           else ...[
-            SectionHeader(title: 'On this device', count: localSpaces.length),
+            SectionHeader(title: '此设备上', count: localSpaces.length),
             for (final space in localSpaces)
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -410,7 +412,7 @@ class _LocalSpaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = HermesTokens.of(context);
-    final chats = sessionCount == 1 ? '1 chat' : '$sessionCount chats';
+    final chats = sessionCount == 1 ? '1 个会话' : '$sessionCount 个会话';
 
     return HermesCard(
       child: Row(
@@ -444,7 +446,7 @@ class _LocalSpaceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: HermesSpacing.xs),
                 Text(
-                  '$chats · on this device only',
+                  '$chats · 仅在此设备上',
                   style: tokens.typography.body.copyWith(color: tokens.muted),
                 ),
               ],
@@ -481,7 +483,7 @@ class _OfflineBanner extends StatelessWidget {
             const SizedBox(width: HermesSpacing.sm),
             Expanded(
               child: Text(
-                'Offline — showing the last known projects.',
+                '离线 — 正在显示最后已知的项目。',
                 style: tokens.typography.label.copyWith(color: tokens.muted),
               ),
             ),
@@ -547,8 +549,8 @@ class _ProjectCard extends StatelessWidget {
                   const SizedBox(height: HermesSpacing.xs),
                   Text(
                     overview!.sessionCount == 1
-                        ? '1 chat'
-                        : '${overview!.sessionCount} chats',
+                        ? '1 个会话'
+                        : '${overview!.sessionCount} 个会话',
                     style: tokens.typography.label.copyWith(
                       color: tokens.muted,
                     ),
@@ -577,11 +579,11 @@ class _ProjectCard extends StatelessWidget {
           ),
           if (isActive) ...[
             const SizedBox(width: HermesSpacing.sm),
-            const StatusChip(status: HermesStatus.running, label: 'Active'),
+            const StatusChip(status: HermesStatus.running, label: '活跃'),
           ],
           PopupMenuButton<String>(
             key: Key('project-actions-${project.id}'),
-            tooltip: 'Project actions',
+            tooltip: '项目操作',
             onSelected: (action) {
               switch (action) {
                 case 'rename':
@@ -596,17 +598,17 @@ class _ProjectCard extends StatelessWidget {
               if (onRename != null)
                 const PopupMenuItem(
                   value: 'rename',
-                  child: Text('Rename project'),
+                  child: Text('重命名项目'),
                 ),
               if (onArchive != null)
                 const PopupMenuItem(
                   value: 'archive',
-                  child: Text('Archive project'),
+                  child: Text('归档项目'),
                 ),
               if (onRestore != null)
                 const PopupMenuItem(
                   value: 'restore',
-                  child: Text('Restore project'),
+                  child: Text('恢复项目'),
                 ),
             ],
           ),
@@ -632,7 +634,7 @@ class _RenameProjectDialogState extends State<_RenameProjectDialog> {
   void _submit() {
     final name = _draft.trim();
     if (name.isEmpty) {
-      setState(() => _error = 'Enter a name');
+      setState(() => _error = '请输入名称');
       return;
     }
     Navigator.pop(context, name);
@@ -641,23 +643,23 @@ class _RenameProjectDialogState extends State<_RenameProjectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Rename ${widget.project.name}'),
+      title: Text('重命名 ${widget.project.name}'),
       content: TextFormField(
         key: const Key('rename-project-name'),
         initialValue: widget.project.name,
         autofocus: true,
         maxLength: 80,
         textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(labelText: 'Name', errorText: _error),
+        decoration: InputDecoration(labelText: '名称', errorText: _error),
         onChanged: (value) => _draft = value,
         onFieldSubmitted: (_) => _submit(),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
-        FilledButton(onPressed: _submit, child: const Text('Rename')),
+        FilledButton(onPressed: _submit, child: const Text('重命名')),
       ],
     );
   }
@@ -677,7 +679,7 @@ class _CreateProjectDialogState extends State<_CreateProjectDialog> {
   void _submit() {
     final name = _draft.trim();
     if (name.isEmpty) {
-      setState(() => _error = 'Enter a name');
+      setState(() => _error = '请输入名称');
       return;
     }
     Navigator.pop(context, name);
@@ -686,22 +688,22 @@ class _CreateProjectDialogState extends State<_CreateProjectDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('New project'),
+      title: const Text('新建项目'),
       content: TextField(
         key: const Key('project-name'),
         autofocus: true,
         maxLength: 80,
         textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(labelText: 'Name', errorText: _error),
+        decoration: InputDecoration(labelText: '名称', errorText: _error),
         onChanged: (value) => _draft = value,
         onSubmitted: (_) => _submit(),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
-        FilledButton(onPressed: _submit, child: const Text('Create')),
+        FilledButton(onPressed: _submit, child: const Text('创建')),
       ],
     );
   }

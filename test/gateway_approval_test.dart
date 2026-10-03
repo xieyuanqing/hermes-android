@@ -94,7 +94,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(sentChoice, GatewayApprovalChoice.once);
-      expect(find.text('Approval needed'), findsNothing);
+      expect(find.text('需要审批'), findsNothing);
     });
 
     testWidgets('requires a second confirmation for permanent approval', (
@@ -118,7 +118,7 @@ void main() {
       await tester.tap(find.byKey(const Key('approval-always')));
       await tester.pump();
       expect(sends, 0);
-      expect(find.text('Confirm always allow'), findsOneWidget);
+      expect(find.text('确认始终允许'), findsOneWidget);
 
       await tester.tap(find.byKey(const Key('approval-always')));
       await tester.pump();

@@ -30,15 +30,15 @@ enum HermesDestination {
   String get label {
     switch (this) {
       case HermesDestination.home:
-        return 'Home';
+        return '首页';
       case HermesDestination.chats:
-        return 'Chats';
+        return '会话';
       case HermesDestination.projects:
-        return 'Projects';
+        return '项目';
       case HermesDestination.activity:
-        return 'Activity';
+        return '动态';
       case HermesDestination.more:
-        return 'More';
+        return '更多';
     }
   }
 

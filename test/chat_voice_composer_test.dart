@@ -44,7 +44,7 @@ void main() {
         extentOffset: 12,
       );
 
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       voice.emitPartial('dict');
       await tester.pump();
@@ -58,7 +58,7 @@ void main() {
       expect(submitCount, 0);
 
       field.controller!.text = '${field.controller!.text}!';
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pumpAndSettle();
 
       expect(submitCount, 1);
@@ -88,7 +88,7 @@ void main() {
       final field = tester.widget<TextField>(find.byType(TextField));
 
       await tester.enterText(find.byType(TextField), 'first');
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       voice.emitPartial('heard');
       voice.emitError('speech failed');
@@ -97,7 +97,7 @@ void main() {
       expect(field.controller!.text, 'first heard');
       expect(submitCount, 0);
 
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       voice.emitPartial('again');
       voice.emitStatus('done');
@@ -132,7 +132,7 @@ void main() {
       final field = tester.widget<TextField>(find.byType(TextField));
 
       await tester.enterText(find.byType(TextField), 'Draft');
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       expect(find.byKey(VoiceComposerIndicator.indicatorKey), findsOneWidget);
 
@@ -177,7 +177,7 @@ void main() {
         text: 'prefix suffix',
         selection: TextSelection(baseOffset: 7, extentOffset: 13),
       );
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       voice.emitPartial('spoken');
       await tester.pump();
@@ -191,7 +191,7 @@ void main() {
         selection: TextSelection(baseOffset: 1, extentOffset: 4),
       );
       field.controller!.value = snapshot;
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump();
       voice.emitPartial('replace');
       await tester.pump();
@@ -216,15 +216,15 @@ void main() {
       final semantics = tester.ensureSemantics();
 
       await _pumpChat(tester, voice: voice, textScale: 2);
-      await tester.tap(find.bySemanticsLabel('Start voice input'));
+      await tester.tap(find.bySemanticsLabel('开始语音输入'));
       await tester.pump(const Duration(seconds: 2));
 
       expect(
-        find.bySemanticsLabel(RegExp(r'Listening, elapsed 00:02')),
+        find.bySemanticsLabel(RegExp(r'正在聆听，已过 00:02')),
         findsOneWidget,
       );
-      expect(find.bySemanticsLabel('Stop voice input'), findsOneWidget);
-      expect(find.bySemanticsLabel('Cancel voice input'), findsOneWidget);
+      expect(find.bySemanticsLabel('停止语音输入'), findsOneWidget);
+      expect(find.bySemanticsLabel('取消语音输入'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
       await tester.tap(find.byKey(VoiceComposerIndicator.stopKey));

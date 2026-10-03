@@ -225,7 +225,7 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    expect(find.text('3 chats'), findsOneWidget);
+    expect(find.text('3 个会话'), findsOneWidget);
   });
 
   testWidgets('separates archived projects from the active section', (
@@ -244,7 +244,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Live'), findsOneWidget);
-    expect(find.text('Archived'), findsOneWidget);
+    expect(find.text('已归档'), findsOneWidget);
     expect(find.text('Retired'), findsOneWidget);
     expect(find.byKey(const Key('project-actions-p2')), findsOneWidget);
   });
@@ -263,11 +263,11 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    expect(find.text('Archived'), findsOneWidget);
+    expect(find.text('已归档'), findsOneWidget);
     expect(find.text('Retired'), findsOneWidget);
     await tester.tap(find.byKey(const Key('project-actions-p2')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Restore project'));
+    await tester.tap(find.text('恢复项目'));
     await tester.pumpAndSettle();
 
     expect(repository.current.projects.map((p) => p.name), contains('Retired'));
@@ -287,22 +287,22 @@ void main() {
 
     await tester.tap(find.byKey(const Key('project-actions-p1')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rename project'));
+    await tester.tap(find.text('重命名项目'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const Key('rename-project-name')),
       'New name',
     );
-    await tester.tap(find.widgetWithText(FilledButton, 'Rename'));
+    await tester.tap(find.widgetWithText(FilledButton, '重命名'));
     await tester.pumpAndSettle();
 
     expect(find.text('New name'), findsOneWidget);
     await tester.tap(find.byKey(const Key('project-actions-p1')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Archive project'));
+    await tester.tap(find.text('归档项目'));
     await tester.pumpAndSettle();
-    expect(find.text('Archive New name?'), findsOneWidget);
-    await tester.tap(find.widgetWithText(FilledButton, 'Archive'));
+    expect(find.text('归档 New name？'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, '归档'));
     await tester.pumpAndSettle();
 
     expect(repository.current.projects, isEmpty);
@@ -323,7 +323,7 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    expect(find.text('Active'), findsOneWidget);
+    expect(find.text('活跃'), findsOneWidget);
   });
 
   testWidgets('reports the tapped project', (tester) async {
@@ -353,13 +353,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.text('No projects yet'), findsOneWidget);
+    expect(find.text('暂无项目'), findsOneWidget);
 
-    await tester.tap(find.text('Create a project'));
+    await tester.tap(find.text('创建项目'));
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byKey(const Key('project-name')), 'C-MAY');
-    await tester.tap(find.text('Create'));
+    await tester.tap(find.text('创建'));
     await tester.pumpAndSettle();
 
     expect(find.text('C-MAY'), findsOneWidget);
@@ -373,12 +373,12 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Create a project'));
+    await tester.tap(find.text('创建项目'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Create'));
+    await tester.tap(find.text('创建'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Enter a name'), findsOneWidget);
+    expect(find.text('请输入名称'), findsOneWidget);
     expect(gateway.projects, isEmpty);
   });
 
@@ -401,11 +401,11 @@ void main() {
     await tester.pumpAndSettle();
 
     // Labelled, not a dead end: the local grouping is still listed.
-    expect(find.text('Compatibility mode'), findsOneWidget);
+    expect(find.text('兼容模式'), findsOneWidget);
     expect(find.byType(ErrorState), findsNothing);
-    expect(find.text('Retry'), findsNothing);
+    expect(find.text('重试'), findsNothing);
     expect(find.text('Hermes Android'), findsOneWidget);
-    expect(find.textContaining('1 chat'), findsOneWidget);
+    expect(find.textContaining('1 个会话'), findsOneWidget);
   });
 
   testWidgets('compatibility mode never offers to create a server project', (
@@ -426,7 +426,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(FloatingActionButton), findsNothing);
-    expect(find.text('Create a project'), findsNothing);
+    expect(find.text('创建项目'), findsNothing);
     expect(gateway.projects, isEmpty);
   });
 
@@ -443,9 +443,9 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    expect(find.text('Compatibility mode'), findsOneWidget);
+    expect(find.text('兼容模式'), findsOneWidget);
     expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.textContaining('Update Hermes'), findsOneWidget);
+    expect(find.textContaining('更新 Hermes'), findsOneWidget);
   });
 
   testWidgets('a transport failure with no cache offers a retry', (
@@ -459,9 +459,9 @@ void main() {
     await _pumpPane(tester, repository);
     await tester.pumpAndSettle();
 
-    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text('重试'), findsOneWidget);
 
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('重试'));
     await tester.pumpAndSettle();
 
     expect(find.text('Hermes Android'), findsOneWidget);
@@ -483,7 +483,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Hermes Android'), findsOneWidget);
-    expect(find.textContaining('Offline'), findsOneWidget);
+    expect(find.textContaining('离线'), findsOneWidget);
   });
 
   testWidgets('pull to refresh asks the gateway again', (tester) async {
@@ -518,12 +518,12 @@ void main() {
     await _pumpPane(tester, repository, spaceStore: store);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Review local spaces'));
+    await tester.tap(find.text('查看本地空间'));
     await tester.pumpAndSettle();
 
     expect(find.byType(SpaceMigrationPreview), findsOneWidget);
     // The one local space matches the server project of the same name.
-    expect(find.textContaining('Matches Hermes Android'), findsOneWidget);
+    expect(find.textContaining('已匹配 Hermes Android'), findsOneWidget);
   });
 
   testWidgets('migrates reviewed chats into their server Projects', (
@@ -540,17 +540,17 @@ void main() {
 
     await _pumpPane(tester, repository, spaceStore: store);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Review local spaces'));
+    await tester.tap(find.text('查看本地空间'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Migrate'), findsOneWidget);
-    await tester.tap(find.text('Migrate'));
+    expect(find.text('迁移'), findsOneWidget);
+    await tester.tap(find.text('迁移'));
     await tester.pumpAndSettle();
 
     expect(gateway.assignments, [
       {'session_key': 'chat-1', 'cwd': '/home/test/hermes-android'},
     ]);
-    expect(find.text('Migration complete'), findsOneWidget);
+    expect(find.text('迁移完成'), findsOneWidget);
   });
 
   testWidgets('stays quiet when there are no local spaces to migrate', (
@@ -568,7 +568,7 @@ void main() {
     await _pumpPane(tester, repository, spaceStore: store);
     await tester.pumpAndSettle();
 
-    expect(find.text('Review local spaces'), findsNothing);
+    expect(find.text('查看本地空间'), findsNothing);
   });
 
   testWidgets('renders in the light theme at a large text scale', (

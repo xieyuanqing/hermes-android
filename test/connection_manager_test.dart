@@ -592,7 +592,7 @@ void main() {
         expect(result.endpoint.path, '/hermes/health');
         expect(
           result.userMessage(apiKeyProvided: true),
-          allOf(contains('HTTP 404'), contains('reverse-proxy routes')),
+          allOf(contains('HTTP 404'), contains('反向代理路由')),
         );
         client.close();
       },
@@ -617,7 +617,7 @@ void main() {
         expect(result.endpoint.path, '/api/sessions');
         expect(
           result.userMessage(apiKeyProvided: true),
-          contains('API key was rejected'),
+          contains('API Key 被'),
         );
         client.close();
       },

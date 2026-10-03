@@ -158,10 +158,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Waiting for your input'), findsOneWidget);
+    expect(find.text('等待您的输入'), findsOneWidget);
     // Elapsed time is the whole point of a blocked row: "stuck" without
     // "for how long" is not actionable.
-    expect(find.text('7m ago'), findsOneWidget);
+    expect(find.text('7 分钟前'), findsOneWidget);
   });
 
   testWidgets('an untitled turn still draws a row rather than vanishing', (
@@ -177,7 +177,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Untitled chat'), findsOneWidget);
+    expect(find.text('未命名会话'), findsOneWidget);
   });
 
   testWidgets('a capped group says how many rows it hid', (tester) async {
@@ -191,7 +191,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('and 3 more'), findsOneWidget);
+    expect(find.text('还有 3 项'), findsOneWidget);
   });
 
   testWidgets('an empty feed becomes a calm designed state, not a blank list', (
@@ -201,7 +201,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.text('Nothing is running'), findsOneWidget);
+    expect(find.text('暂无正在运行的任务'), findsOneWidget);
   });
 
   testWidgets('Inbox mode only shows work that needs action', (tester) async {
@@ -256,7 +256,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.text('Inbox is clear'), findsOneWidget);
+    expect(find.text('待办已清空'), findsOneWidget);
   });
 
   testWidgets('a first read that fails becomes a retryable error state', (
@@ -277,7 +277,7 @@ void main() {
 
     expect(find.byType(ErrorState), findsOneWidget);
 
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('重试'));
     await tester.pumpAndSettle();
 
     expect(find.byType(ErrorState), findsNothing);
@@ -308,7 +308,7 @@ void main() {
 
     expect(find.byType(ErrorState), findsNothing);
     expect(find.text('Still shown'), findsOneWidget);
-    expect(find.textContaining('Offline', findRichText: true), findsOneWidget);
+    expect(find.textContaining('离线', findRichText: true), findsOneWidget);
   });
 
   testWidgets('tapping a row reports the item it belongs to', (tester) async {

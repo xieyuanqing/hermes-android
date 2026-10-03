@@ -76,15 +76,15 @@ void main() {
 
         expect(sink.shown, hasLength(1));
         final posted = sink.shown.single;
-        expect(posted.title, 'Hermes response ready');
+        expect(posted.title, 'Hermes 响应已就绪');
         expect(posted.body, 'Roadmap: Response ready');
         // The payload is the deep-link seed Phase 3 will extend.
         expect(posted.payload, 'turn-42');
         expect(posted.channel.id, 'hermes_turn_notifications');
-        expect(posted.channel.name, 'Hermes Turns');
+        expect(posted.channel.name, 'Hermes 对话轮次');
         expect(
           posted.channel.description,
-          'Notifications for completed background turns',
+          '后台对话轮次完成通知',
         );
       },
     );

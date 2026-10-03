@@ -40,18 +40,18 @@ class _SpacesScreenState extends State<SpacesScreen> {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('New space'),
+          title: const Text('新建空间'),
           content: TextField(
             key: const Key('space-name'),
             autofocus: true,
             maxLength: 80,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(labelText: 'Name', errorText: error),
+            decoration: InputDecoration(labelText: '名称', errorText: error),
             onChanged: (value) => draft = value,
             onSubmitted: (value) {
               final normalized = value.trim();
               if (normalized.isEmpty) {
-                setDialogState(() => error = 'Enter a name');
+                setDialogState(() => error = '请输入名称');
               } else {
                 Navigator.pop(dialogContext, normalized);
               }
@@ -60,18 +60,18 @@ class _SpacesScreenState extends State<SpacesScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             FilledButton(
               onPressed: () {
                 final normalized = draft.trim();
                 if (normalized.isEmpty) {
-                  setDialogState(() => error = 'Enter a name');
+                  setDialogState(() => error = '请输入名称');
                 } else {
                   Navigator.pop(dialogContext, normalized);
                 }
               },
-              child: const Text('Create'),
+              child: const Text('创建'),
             ),
           ],
         ),
@@ -94,7 +94,7 @@ class _SpacesScreenState extends State<SpacesScreen> {
     final name = await showDialog<String>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Rename space'),
+        title: const Text('重命名空间'),
         content: TextFormField(
           key: const Key('rename-space-name'),
           initialValue: space.name,
@@ -107,11 +107,11 @@ class _SpacesScreenState extends State<SpacesScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, draft.trim()),
-            child: const Text('Save'),
+            child: const Text('保存'),
           ),
         ],
       ),
@@ -128,14 +128,14 @@ class _SpacesScreenState extends State<SpacesScreen> {
     }
   }
 
-  String _countLabel(int count) => count == 1 ? '1 chat' : '$count chats';
+  String _countLabel(int count) => '$count 个会话';
 
   String? _activityLabel(double? timestamp) {
     if (timestamp == null) return null;
     final date = DateTime.fromMillisecondsSinceEpoch(
       (timestamp * 1000).toInt(),
     );
-    return 'Last activity ${date.day}/${date.month}/${date.year}';
+    return '最后动态 ${date.year}/${date.month}/${date.day}';
   }
 
   Widget _scopeTile({
@@ -165,11 +165,11 @@ class _SpacesScreenState extends State<SpacesScreen> {
     final state = _state;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Spaces'),
+        title: const Text('空间'),
         actions: [
           IconButton(
             key: const Key('create-space'),
-            tooltip: 'New space',
+            tooltip: '新建空间',
             onPressed: _createSpace,
             icon: const Icon(Icons.create_new_folder_outlined),
           ),
@@ -183,14 +183,14 @@ class _SpacesScreenState extends State<SpacesScreen> {
                 _scopeTile(
                   key: const Key('space-all'),
                   icon: Icons.forum_outlined,
-                  title: 'All chats',
+                  title: '所有会话',
                   count: widget.sessions.length,
                   scope: const ChatSpaceScope.all(),
                 ),
                 _scopeTile(
                   key: const Key('space-unassigned'),
                   icon: Icons.inbox_outlined,
-                  title: 'Unassigned',
+                  title: '未分配',
                   count: state
                       .sessionsFor(
                         widget.sessions,
@@ -217,7 +217,7 @@ class _SpacesScreenState extends State<SpacesScreen> {
                     ),
                     trailing: PopupMenuButton<String>(
                       key: Key('space-menu-${space.id}'),
-                      tooltip: 'Space actions',
+                      tooltip: '空间操作',
                       onSelected: (action) {
                         if (action == 'rename') _renameSpace(space);
                       },
@@ -226,7 +226,7 @@ class _SpacesScreenState extends State<SpacesScreen> {
                           value: 'rename',
                           child: ListTile(
                             leading: Icon(Icons.edit_outlined),
-                            title: Text('Rename'),
+                            title: Text('重命名'),
                           ),
                         ),
                       ],
@@ -236,7 +236,7 @@ class _SpacesScreenState extends State<SpacesScreen> {
                   const Padding(
                     padding: EdgeInsets.all(24),
                     child: Text(
-                      'Create a space to separate related conversations.',
+                      '创建空间以隔离相关的会话。',
                       textAlign: TextAlign.center,
                     ),
                   ),

@@ -1,5 +1,7 @@
 # Hermes Android — v2.1.10
 
+[简体中文文档 (README.zh-CN.md)](README.zh-CN.md)
+
 Android client for [Hermes Agent](https://hermes-agent.nousresearch.com/) — chat with your Hermes sessions from a phone or tablet over local Wi-Fi or a private Tailscale network.
 
 > **v2.0.0** merges the community Remote Gateway edition contributed by

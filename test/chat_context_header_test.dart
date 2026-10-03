@@ -49,9 +49,9 @@ void main() {
 
     expect(find.text('Hermes Android'), findsOneWidget);
     expect(find.text('gpt-5.6-sol'), findsOneWidget);
-    expect(find.text('High'), findsOneWidget);
+    expect(find.text('高'), findsOneWidget);
     expect(find.text('Miniserver'), findsOneWidget);
-    expect(find.bySemanticsLabel('Miniserver connected'), findsOneWidget);
+    expect(find.bySemanticsLabel('Miniserver 已连接'), findsOneWidget);
   });
 
   testWidgets('labels a chat without a known project as Unassigned', (
@@ -59,13 +59,13 @@ void main() {
   ) async {
     await _pump(tester);
 
-    expect(find.text('Unassigned'), findsOneWidget);
+    expect(find.text('未分配'), findsOneWidget);
   });
 
   testWidgets('exposes offline state accessibly', (tester) async {
     await _pump(tester, status: ChatConnectionStatus.offline);
 
-    expect(find.bySemanticsLabel('Miniserver offline'), findsOneWidget);
+    expect(find.bySemanticsLabel('Miniserver 离线'), findsOneWidget);
   });
 
   testWidgets('survives narrow width and large text', (tester) async {

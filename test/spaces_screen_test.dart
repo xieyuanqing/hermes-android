@@ -52,11 +52,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('All chats'), findsOneWidget);
-    expect(find.text('Unassigned'), findsOneWidget);
+    expect(find.text('所有会话'), findsOneWidget);
+    expect(find.text('未分配'), findsOneWidget);
     expect(find.text('Hermes Android'), findsOneWidget);
-    expect(find.text('2 chats'), findsOneWidget);
-    expect(find.text('1 chat'), findsNWidgets(2));
+    expect(find.text('2 个会话'), findsOneWidget);
+    expect(find.text('1 个会话'), findsNWidgets(2));
   });
 
   testWidgets('selecting a space returns its scope', (tester) async {
@@ -92,7 +92,7 @@ void main() {
     await tester.tap(find.byKey(const Key('create-space')));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('space-name')), 'ScriptHive');
-    await tester.tap(find.text('Create'));
+    await tester.tap(find.text('创建'));
     await tester.pumpAndSettle();
 
     expect(find.text('ScriptHive'), findsOneWidget);
@@ -113,13 +113,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(Key('space-menu-${space.id}')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rename'));
+    await tester.tap(find.text('重命名'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const Key('rename-space-name')),
       'Hermes Android',
     );
-    await tester.tap(find.text('Save'));
+    await tester.tap(find.text('保存'));
     await tester.pumpAndSettle();
 
     expect(find.text('Hermes Android'), findsOneWidget);

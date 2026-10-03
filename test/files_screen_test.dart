@@ -75,7 +75,7 @@ void main() {
     await _pump(tester, source);
     await tester.pumpAndSettle();
 
-    expect(find.text('Files'), findsOneWidget);
+    expect(find.text('文件'), findsOneWidget);
     expect(find.text('/srv/project'), findsOneWidget);
     expect(find.text('main'), findsOneWidget);
     expect(find.text('lib'), findsOneWidget);
@@ -101,7 +101,7 @@ void main() {
 
     expect(find.text('# Hermes\nRemote preview'), findsOneWidget);
     expect(find.text('markdown'), findsOneWidget);
-    await tester.tap(find.text('Add to chat'));
+    await tester.tap(find.text('添加至会话'));
     await tester.pumpAndSettle();
 
     expect(references, ['/srv/project/README.md']);
@@ -121,7 +121,7 @@ void main() {
 
     await tester.tap(find.text('README.md'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Download'));
+    await tester.tap(find.text('下载'));
     await tester.pumpAndSettle();
 
     expect(downloads.single.filename, 'README.md');
@@ -135,7 +135,7 @@ void main() {
     await _pump(tester, source);
     await tester.pumpAndSettle();
 
-    expect(find.text('Could not load files'), findsOneWidget);
-    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text('无法加载文件'), findsOneWidget);
+    expect(find.text('重试'), findsOneWidget);
   });
 }

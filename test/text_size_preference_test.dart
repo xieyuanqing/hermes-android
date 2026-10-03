@@ -73,7 +73,7 @@ void main() {
       find.byWidgetPredicate(
         (widget) =>
             widget is Semantics &&
-            widget.properties.label == 'Text size: System',
+            widget.properties.label == '文字大小：跟随系统',
       ),
       findsOneWidget,
     );
@@ -81,13 +81,13 @@ void main() {
       find.byWidgetPredicate(
         (widget) =>
             widget is Semantics &&
-            widget.properties.label == 'Text size preview',
+            widget.properties.label == '文字大小预览',
       ),
       findsOneWidget,
     );
-    await tester.tap(find.text('Text size'));
+    await tester.tap(find.text('文字大小'));
     await tester.pumpAndSettle();
-    final extraLarge = find.text('Extra large');
+    final extraLarge = find.text('超大');
     await tester.scrollUntilVisible(extraLarge, 200);
     await tester.tap(extraLarge);
     await tester.pumpAndSettle();
@@ -129,7 +129,7 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.text('Text size'), findsOneWidget);
+      expect(find.text('文字大小'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -150,7 +150,7 @@ void main() {
 
     expect(
       MediaQuery.textScalerOf(
-        tester.element(find.text('No connections')),
+        tester.element(find.text('无连接')),
       ).scale(10),
       16,
     );
@@ -162,7 +162,7 @@ void main() {
 
     expect(
       MediaQuery.textScalerOf(
-        tester.element(find.text('No connections')),
+        tester.element(find.text('无连接')),
       ).scale(10),
       20.8,
     );

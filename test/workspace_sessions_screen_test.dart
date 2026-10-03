@@ -296,7 +296,7 @@ void main() {
     ) async {
       await pumpChats(tester);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Recent'));
+      await tester.tap(find.widgetWithText(ChoiceChip, '近期'));
       await tester.pumpAndSettle();
 
       expect(find.text('Fresh'), findsOneWidget);
@@ -306,7 +306,7 @@ void main() {
     testWidgets('Unassigned shows only non-claimed sessions', (tester) async {
       await pumpChats(tester);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Unassigned'));
+      await tester.tap(find.widgetWithText(ChoiceChip, '未分配'));
       await tester.pumpAndSettle();
 
       expect(find.text('Filed'), findsNothing);
@@ -316,7 +316,7 @@ void main() {
     testWidgets('Archived shows quick-archived sessions', (tester) async {
       await pumpChats(tester);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Archived'));
+      await tester.tap(find.widgetWithText(ChoiceChip, '已归档'));
       await tester.pumpAndSettle();
 
       expect(find.text('Quick archived'), findsOneWidget);
@@ -356,7 +356,7 @@ void main() {
       expect(find.text('Archived on server'), findsNothing);
       expect(find.text('Fresh'), findsOneWidget);
 
-      await tester.tap(find.widgetWithText(ChoiceChip, 'Archived'));
+      await tester.tap(find.widgetWithText(ChoiceChip, '已归档'));
       await tester.pumpAndSettle();
 
       expect(find.text('Archived on server'), findsOneWidget);
@@ -407,8 +407,8 @@ void main() {
         ],
       );
 
-      expect(find.text('Running'), findsOneWidget);
-      expect(find.text('Done'), findsOneWidget);
+      expect(find.text('运行中'), findsOneWidget);
+      expect(find.text('已完成'), findsOneWidget);
     });
 
     testWidgets('labels the project when known, Unassigned otherwise', (
@@ -473,7 +473,7 @@ void main() {
     await tester.tap(find.text('Old research'));
     expect(opened, ['s1']);
 
-    await tester.tap(find.byTooltip('Promote to project'));
+    await tester.tap(find.byTooltip('提升至项目'));
     await tester.pumpAndSettle();
     expect(promoted, ['s1']);
     expect(find.text('Old research'), findsNothing);
@@ -506,7 +506,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Loose chat'), findsOneWidget);
-    await tester.tap(find.byTooltip('Move to project').first);
+    await tester.tap(find.byTooltip('移动至项目').first);
     await tester.pumpAndSettle();
 
     expect(moved, ['s1']);
@@ -541,13 +541,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.widgetWithText(ChoiceChip, 'Unassigned'));
+    await tester.tap(find.widgetWithText(ChoiceChip, '未分配'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Move to project'));
+    await tester.tap(find.byTooltip('移动至项目'));
     await tester.pumpAndSettle();
     expect(find.text('Loose chat'), findsNothing);
 
-    await tester.tap(find.widgetWithText(ChoiceChip, 'All'));
+    await tester.tap(find.widgetWithText(ChoiceChip, '全部'));
     await tester.pumpAndSettle();
 
     final row = find.ancestor(
@@ -560,11 +560,11 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.descendant(of: row, matching: find.text('Unassigned')),
+      find.descendant(of: row, matching: find.text('未分配')),
       findsNothing,
     );
 
-    await tester.tap(find.widgetWithText(ChoiceChip, 'Archived'));
+    await tester.tap(find.widgetWithText(ChoiceChip, '已归档'));
     await tester.pumpAndSettle();
     expect(find.text('Archived chat'), findsOneWidget);
   });

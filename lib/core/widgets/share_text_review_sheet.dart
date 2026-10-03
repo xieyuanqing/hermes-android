@@ -5,13 +5,13 @@ import '../theme/hermes_theme.dart';
 import '../utils/new_chat_options.dart';
 
 enum ShareFavoriteAction {
-  useAsIs('Use as is', Icons.edit_note_rounded),
-  summarize('Summarize', Icons.summarize_rounded),
-  explain('Explain', Icons.lightbulb_outline_rounded),
-  research('Research', Icons.travel_explore_rounded),
-  extractTasks('Extract tasks', Icons.task_alt_rounded),
-  remember('Remember', Icons.memory_rounded),
-  fillFromDocument('Fill from document', Icons.description_outlined);
+  useAsIs('原样使用', Icons.edit_note_rounded),
+  summarize('总结', Icons.summarize_rounded),
+  explain('解释', Icons.lightbulb_outline_rounded),
+  research('调研', Icons.travel_explore_rounded),
+  extractTasks('提取任务', Icons.task_alt_rounded),
+  remember('记入记忆', Icons.memory_rounded),
+  fillFromDocument('根据文档填写', Icons.description_outlined);
 
   final String label;
   final IconData icon;
@@ -99,13 +99,13 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Share to Hermes',
+                      '分享至 Hermes',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: HermesSpacing.sm),
                     Text(
                       widget.sharedText.trim().isEmpty
-                          ? 'No text shared'
+                          ? '未分享文本'
                           : widget.sharedText,
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
@@ -114,7 +114,7 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                     if (widget.sharedFiles.isNotEmpty) ...[
                       const SizedBox(height: HermesSpacing.md),
                       Text(
-                        '${widget.sharedFiles.length} ${widget.sharedFiles.length == 1 ? 'attachment' : 'attachments'}',
+                        '${widget.sharedFiles.length} 个附件',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       const SizedBox(height: HermesSpacing.xs),
@@ -137,7 +137,7 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                     ],
                     const SizedBox(height: HermesSpacing.lg),
                     Text(
-                      'Action',
+                      '操作',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: HermesSpacing.sm),
@@ -156,7 +156,7 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                     ),
                     const SizedBox(height: HermesSpacing.lg),
                     Text(
-                      'Destination',
+                      '目标',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     RadioGroup<NewChatMode>(
@@ -168,17 +168,17 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                         children: [
                           const RadioListTile<NewChatMode>(
                             contentPadding: EdgeInsets.zero,
-                            title: Text('Quick chat'),
-                            subtitle: Text('Auto-archives after 72 hours'),
+                            title: Text('快速会话'),
+                            subtitle: Text('72 小时后自动归档'),
                             value: NewChatMode.quickChat,
                           ),
                           RadioListTile<NewChatMode>(
                             contentPadding: EdgeInsets.zero,
-                            title: const Text('Project chat'),
+                            title: const Text('项目会话'),
                             subtitle: Text(
                               widget.projectChatEnabled
-                                  ? 'Choose an active Project next'
-                                  : 'No active Projects on this Gateway',
+                                  ? '下一步选择活跃项目'
+                                  : '此 Gateway 上没有活跃项目',
                             ),
                             value: NewChatMode.projectChat,
                             enabled: widget.projectChatEnabled,
@@ -196,7 +196,7 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
               children: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: const Text('取消'),
                 ),
                 const SizedBox(width: HermesSpacing.sm),
                 FilledButton.icon(
@@ -204,7 +204,7 @@ class _ShareTextReviewSheetState extends State<ShareTextReviewSheet> {
                     context,
                   ).pop(ShareTextDecision(action: _action, mode: _mode)),
                   icon: const Icon(Icons.arrow_forward_rounded),
-                  label: const Text('Continue'),
+                  label: const Text('继续'),
                 ),
               ],
             ),

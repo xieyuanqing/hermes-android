@@ -262,7 +262,7 @@ void main() {
     final manager = await buildManager();
     await pumpHome(tester, manager);
 
-    expect(find.text('No connections'), findsOneWidget);
+    expect(find.text('暂无连接'), findsOneWidget);
 
     // Simulate what a successful import does to storage, then let the screen
     // refresh the way the import flow asks it to.
@@ -281,7 +281,7 @@ void main() {
     state.refreshConnections();
     await tester.pumpAndSettle();
 
-    expect(find.text('No connections'), findsNothing);
+    expect(find.text('暂无连接'), findsNothing);
     expect(find.text('Miniserver'), findsOneWidget);
   });
 
@@ -310,15 +310,15 @@ void main() {
     final manager = await buildManager();
     await pumpHome(tester, manager);
 
-    await tester.tap(find.byTooltip('Add Connection'));
+    await tester.tap(find.byTooltip('添加连接'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Custom proxy and dashboard details'));
+    await tester.tap(find.text('自定义代理与仪表盘详情'));
     await tester.pumpAndSettle();
 
     final field = find.widgetWithText(
       TextField,
-      'Desktop Gateway URL (optional)',
+      '桌面 Gateway URL（可选）',
     );
     expect(field, findsOneWidget);
     final textField = tester.widget<TextField>(field);

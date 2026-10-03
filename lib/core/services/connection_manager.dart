@@ -597,17 +597,17 @@ class ApiHealthCheckResult {
     if (isHealthy) return '';
     if (statusCode == 401 || statusCode == 403) {
       return apiKeyProvided
-          ? 'API key was rejected by $endpoint (HTTP $statusCode).'
-          : 'Server requires an API key. Enter your API_SERVER_KEY.';
+          ? 'API Key 被 $endpoint 拒绝（HTTP $statusCode）。'
+          : '服务器需要 API Key。请输入您的 API_SERVER_KEY。';
     }
     if (statusCode == 404) {
-      return 'Gateway endpoint $endpoint returned HTTP 404. Check the Gateway '
-          'path prefix and reverse-proxy routes.';
+      return 'Gateway 端点 $endpoint 返回 HTTP 404。请检查 Gateway '
+          '路径前缀和反向代理路由。';
     }
     if (statusCode case final code?) {
-      return 'Gateway endpoint $endpoint returned HTTP $code.';
+      return 'Gateway 端点 $endpoint 返回 HTTP $code。';
     }
-    return 'Cannot reach Gateway endpoint $endpoint.';
+    return '无法访问 Gateway 端点 $endpoint。';
   }
 }
 

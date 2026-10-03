@@ -66,8 +66,8 @@ void main() {
           .expand((section) => section.entries)
           .firstWhere((candidate) => candidate.id == 'unassigned');
 
-      expect(entry.title, 'Unassigned chats');
-      expect(entry.subtitle, contains('not assigned to a Project'));
+      expect(entry.title, '未分配会话');
+      expect(entry.subtitle, contains('未分配给项目'));
     });
 
     test('every section has a title and at least one entry', () {
@@ -181,17 +181,17 @@ void main() {
         expect(find.text(section.title), findsOneWidget);
       }
       await tester.scrollUntilVisible(
-        find.text('Cron'),
+        find.text('定时任务'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('Cron'), findsOneWidget);
+      expect(find.text('定时任务'), findsOneWidget);
       await tester.scrollUntilVisible(
-        find.text('Settings'),
+        find.text('设置'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('Settings'), findsOneWidget);
+      expect(find.text('设置'), findsOneWidget);
     });
 
     testWidgets('selecting an available entry reports it once', (tester) async {
@@ -202,9 +202,9 @@ void main() {
         onSelect: (entry) => picked.add(entry.id),
       );
 
-      await tester.ensureVisible(find.text('Cron'));
+      await tester.ensureVisible(find.text('定时任务'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Cron'));
+      await tester.tap(find.text('定时任务'));
       await tester.pumpAndSettle();
 
       expect(picked, ['cron']);
@@ -219,11 +219,11 @@ void main() {
       );
 
       await tester.scrollUntilVisible(
-        find.text('Cron'),
+        find.text('定时任务'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
-      await tester.tap(find.text('Cron'), warnIfMissed: false);
+      await tester.tap(find.text('定时任务'), warnIfMissed: false);
       await tester.pumpAndSettle();
 
       expect(picked, isEmpty);
@@ -250,11 +250,11 @@ void main() {
           onSelect: (entry) => picked.add(entry.id),
         );
 
-        await tester.tap(find.text('Assets'), warnIfMissed: false);
+        await tester.tap(find.text('媒体与产物'), warnIfMissed: false);
         await tester.pumpAndSettle();
 
         expect(
-          find.textContaining('server-authoritative Assets index'),
+          find.textContaining('媒体与产物索引'),
           findsOneWidget,
         );
         expect(picked, isEmpty);
@@ -272,7 +272,7 @@ void main() {
       );
 
       expect(tester.takeException(), isNull);
-      expect(find.text('Unassigned chats'), findsOneWidget);
+      expect(find.text('未分配会话'), findsOneWidget);
     });
 
     testWidgets('scrolls to the last entry on a real phone height', (
@@ -281,12 +281,12 @@ void main() {
       await _pumpPane(tester, sections: sections(), size: const Size(360, 720));
 
       await tester.scrollUntilVisible(
-        find.text('Settings'),
+        find.text('设置'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
 
-      expect(find.text('Settings'), findsOneWidget);
+      expect(find.text('设置'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 
@@ -298,12 +298,12 @@ void main() {
       );
 
       await tester.scrollUntilVisible(
-        find.text('Settings'),
+        find.text('设置'),
         160,
         scrollable: find.byType(Scrollable).first,
       );
       expect(tester.takeException(), isNull);
-      expect(find.text('Settings'), findsOneWidget);
+      expect(find.text('设置'), findsOneWidget);
     });
 
     testWidgets('every entry is reachable by a screen reader', (tester) async {

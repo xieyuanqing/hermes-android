@@ -324,11 +324,11 @@ void main() {
 
     await tester.tap(find.text(HermesDestination.chats.label).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(ChoiceChip, 'Unassigned'));
+    await tester.tap(find.widgetWithText(ChoiceChip, '未分配'));
     await tester.pumpAndSettle();
     expect(
       tester
-          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Unassigned'))
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, '未分配'))
           .selected,
       isTrue,
     );
@@ -340,7 +340,7 @@ void main() {
 
     expect(
       tester
-          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Unassigned'))
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, '未分配'))
           .selected,
       isTrue,
     );
@@ -420,7 +420,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
 
     expect(find.byType(ProjectsPane), findsOneWidget);
@@ -439,7 +439,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Hermes Android'));
     await tester.pumpAndSettle();
@@ -461,7 +461,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Hermes Android'));
     await tester.pumpAndSettle();
@@ -469,7 +469,7 @@ void main() {
     expect(find.byType(ProjectDetailScreen), findsOneWidget);
     // The name is carried, so the screen never opens on "Untitled".
     expect(find.text('Hermes Android'), findsWidgets);
-    expect(find.text('Chats'), findsWidgets);
+    expect(find.text('会话'), findsWidgets);
   });
 
   testWidgets('deleting a Project returns to the refreshed Projects list', (
@@ -486,15 +486,15 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Delete me'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete project'));
+    await tester.tap(find.text('删除项目'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await tester.tap(find.widgetWithText(TextButton, '删除'));
     await tester.pumpAndSettle();
 
     expect(deletions, ['p1']);
@@ -519,7 +519,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Hermes Android'));
     await tester.pumpAndSettle();
@@ -548,7 +548,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Hermes Android'));
     await tester.pumpAndSettle();
@@ -563,7 +563,7 @@ void main() {
     await _pump(tester, connection: _connection());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
 
     expect(find.byType(ErrorState), findsOneWidget);
@@ -620,12 +620,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Search all chats'));
+    await tester.tap(find.byTooltip('搜索所有会话'));
     await tester.pumpAndSettle();
 
     expect(find.byType(WorkspaceSessionsScreen), findsOneWidget);
     expect(
-      find.descendant(of: find.byType(AppBar), matching: find.text('Search')),
+      find.descendant(of: find.byType(AppBar), matching: find.text('搜索')),
       findsOneWidget,
     );
     expect(find.byKey(kWorkspaceSessionSearchKey), findsOneWidget);
@@ -699,11 +699,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byTooltip('Open inbox (2)'), findsOneWidget);
-    await tester.tap(find.byTooltip('Open inbox (2)'));
+    expect(find.byTooltip('打开待办收件箱 (2)'), findsOneWidget);
+    await tester.tap(find.byTooltip('打开待办收件箱 (2)'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Inbox'), findsOneWidget);
+    expect(find.text('待办收件箱'), findsOneWidget);
     expect(find.text('Approve deployment'), findsOneWidget);
     expect(find.text('Repair failed turn'), findsOneWidget);
     expect(find.text('Still running'), findsNothing);
@@ -918,17 +918,17 @@ void main() {
 
     expect(find.byType(MorePane), findsOneWidget);
     await tester.scrollUntilVisible(
-      find.text('Cron'),
+      find.text('定时任务'),
       160,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Cron'), findsOneWidget);
+    expect(find.text('定时任务'), findsOneWidget);
     await tester.scrollUntilVisible(
-      find.text('Settings'),
+      find.text('设置'),
       160,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.text('设置'), findsOneWidget);
   });
 
   testWidgets('More opens Unassigned chats as a native Smart View', (
@@ -945,7 +945,7 @@ void main() {
 
     await tester.tap(find.text(HermesDestination.more.label).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Unassigned chats'));
+    await tester.tap(find.text('未分配会话'));
     await tester.pumpAndSettle();
     expect(find.byType(WorkspaceSessionsScreen), findsOneWidget);
     expect(find.text('Find me'), findsOneWidget);
@@ -1016,7 +1016,7 @@ void main() {
 
     await tester.tap(find.text(HermesDestination.more.label).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Unassigned chats'));
+    await tester.tap(find.text('未分配会话'));
     await tester.pumpAndSettle();
 
     expect(find.byType(WorkspaceSessionsScreen), findsOneWidget);
@@ -1036,7 +1036,7 @@ void main() {
 
     await tester.tap(find.text(HermesDestination.more.label).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Files'));
+    await tester.tap(find.text('文件'));
     await tester.pumpAndSettle();
 
     expect(find.text('Native files ready'), findsOneWidget);
@@ -1056,11 +1056,11 @@ void main() {
     await tester.tap(find.text(HermesDestination.more.label).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Open the Hermes dashboard'),
+      find.text('打开 Hermes 仪表盘'),
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Open the Hermes dashboard'));
+    await tester.tap(find.text('打开 Hermes 仪表盘'));
     await tester.pumpAndSettle();
 
     expect(opened, hasLength(1));
@@ -1087,11 +1087,11 @@ void main() {
     await tester.tap(find.text(HermesDestination.more.label).last);
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Cron'),
+      find.text('定时任务'),
       160,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Cron'), warnIfMissed: false);
+    await tester.tap(find.text('定时任务'), warnIfMissed: false);
     await tester.pumpAndSettle();
 
     expect(opened, isEmpty);
@@ -1113,13 +1113,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
     expect(find.text('Hermes Android'), findsOneWidget);
 
-    await tester.tap(find.text('Home').last);
+    await tester.tap(find.text('首页').last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Projects').last);
+    await tester.tap(find.text('项目').last);
     await tester.pumpAndSettle();
 
     expect(find.text('Hermes Android'), findsOneWidget);
@@ -1168,14 +1168,14 @@ void main() {
         repository: await _repository([]),
         sessions: [_session(id: 's1', title: 'Roadmap slice')],
         turnSignalsLoader: (_) async => const HomeTurnSignals(
-          attention: {'s1': 'Waiting for your input'},
+          attention: {'s1': '等待您的输入'},
           running: {},
         ),
       );
       await tester.pumpAndSettle();
 
       expect(_sectionHeader(HomeSectionKind.needsYou), findsOneWidget);
-      expect(find.text('Waiting for your input'), findsOneWidget);
+      expect(find.text('等待您的输入'), findsOneWidget);
       expect(_sectionHeader(HomeSectionKind.continueWorking), findsNothing);
     });
 
@@ -1530,7 +1530,7 @@ void main() {
 
         expect(opened, hasLength(1));
         expect(opened.single.projectWorkingDirectory, isNull);
-        expect(find.textContaining('opened unassigned'), findsOneWidget);
+        expect(find.textContaining('已作为未分配打开'), findsOneWidget);
       },
     );
 
@@ -1629,11 +1629,11 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
 
-        expect(find.text('Share to Hermes'), findsOneWidget);
+        expect(find.text('分享至 Hermes'), findsOneWidget);
         expect(find.byType(ChatScreen), findsNothing);
-        await tester.tap(find.text('Summarize'));
-        await tester.ensureVisible(find.text('Continue'));
-        await tester.tap(find.text('Continue'));
+        await tester.tap(find.text('总结'));
+        await tester.ensureVisible(find.text('继续'));
+        await tester.tap(find.text('继续'));
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
 
@@ -1669,10 +1669,10 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
-      await tester.ensureVisible(find.text('Project chat'));
-      await tester.tap(find.text('Project chat'));
-      await tester.ensureVisible(find.text('Continue'));
-      await tester.tap(find.text('Continue'));
+      await tester.ensureVisible(find.text('项目会话'));
+      await tester.tap(find.text('项目会话'));
+      await tester.ensureVisible(find.text('继续'));
+      await tester.tap(find.text('继续'));
       await tester.pumpAndSettle();
 
       expect(opened.single.projectId, 'p1');
@@ -1711,13 +1711,13 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
-      expect(find.text('1 attachment'), findsOneWidget);
+      expect(find.text('1 个附件'), findsOneWidget);
       expect(find.text('report.pdf'), findsOneWidget);
       expect(
-        tester.getTopLeft(find.text('Share to Hermes')).dy,
+        tester.getTopLeft(find.text('分享至 Hermes')).dy,
         greaterThanOrEqualTo(44),
       );
-      await tester.tap(find.text('Continue'));
+      await tester.tap(find.text('继续'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
@@ -1879,7 +1879,7 @@ void main() {
 
       await tester.tap(find.text(HermesDestination.activity.label).last);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Untitled chat'));
+      await tester.tap(find.text('未命名会话'));
       await tester.pumpAndSettle();
 
       expect(opened, isEmpty);

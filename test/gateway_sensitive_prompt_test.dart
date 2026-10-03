@@ -14,7 +14,7 @@ void main() {
       expect(request, isNotNull);
       expect(request!.requestId, 'sudo-123');
       expect(request.kind, GatewaySensitivePromptKind.sudo);
-      expect(request.fieldLabel, 'Sudo password');
+      expect(request.fieldLabel, 'Sudo 密码');
     });
 
     test('parses the secret label and prompt without retaining a value', () {
@@ -130,7 +130,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(sentValue, '');
-      expect(find.text('Administrator password needed'), findsNothing);
+      expect(find.text('需要管理员密码'), findsNothing);
     });
 
     testWidgets('shows a generic error without exposing the entered value', (

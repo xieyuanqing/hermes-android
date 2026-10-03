@@ -148,8 +148,8 @@ class PluginTurnNotificationSink implements TurnNotificationSink {
 class TurnNotificationService {
   static const turnChannel = TurnNotificationChannel(
     id: 'hermes_turn_notifications',
-    name: 'Hermes Turns',
-    description: 'Notifications for completed background turns',
+    name: 'Hermes 对话轮次',
+    description: '后台对话轮次完成通知',
   );
 
   final TurnNotificationSink _sink;
@@ -213,7 +213,7 @@ class TurnNotificationService {
     await _sink.show(
       TurnNotification(
         id: notificationIdFor(turnId),
-        title: 'Hermes response ready',
+        title: 'Hermes 响应已就绪',
         body: turnSummary,
         payload: turnId,
         channel: turnChannel,

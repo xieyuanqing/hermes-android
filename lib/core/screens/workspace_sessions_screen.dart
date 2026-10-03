@@ -14,10 +14,10 @@ enum WorkspaceSessionView { all, unassigned, archivedQuick, search }
 /// The chip filters the Chats browser offers (decision #4 of the final UI
 /// spec): every conversation, recent activity, unassigned, and archived.
 enum WorkspaceChatsFilter {
-  all('All'),
-  recent('Recent'),
-  unassigned('Unassigned'),
-  archived('Archived');
+  all('全部'),
+  recent('近期'),
+  unassigned('未分配'),
+  archived('已归档');
 
   final String label;
   const WorkspaceChatsFilter(this.label);
@@ -25,10 +25,10 @@ enum WorkspaceChatsFilter {
 
 /// How recently a conversation was last active, for date group headers.
 enum ChatDateBucket {
-  today('Today'),
-  yesterday('Yesterday'),
-  thisWeek('This week'),
-  earlier('Earlier');
+  today('今天'),
+  yesterday('昨天'),
+  thisWeek('本周'),
+  earlier('更早');
 
   final String label;
   const ChatDateBucket(this.label);
@@ -328,7 +328,7 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
       }
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Moved to a Project')));
+      ).showSnackBar(const SnackBar(content: Text('已移动至项目')));
     } catch (error) {
       if (!mounted) return;
       setState(() => _promoting.remove(session.id));
@@ -336,9 +336,9 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           persist: false,
-          content: const Text('Couldn’t promote conversation'),
+          content: const Text('无法提升会话'),
           action: SnackBarAction(
-            label: 'Retry',
+            label: '重试',
             onPressed: () => unawaited(_promote(session)),
           ),
         ),
@@ -356,8 +356,8 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
                   child: LoadingSkeleton(rows: 5),
                 )
               : ErrorState(
-                  title: 'Could not load conversations',
-                  message: 'Check the connection and try again.',
+                  title: '无法加载会话',
+                  message: '请检查连接并重试。',
                   onRetry: _load,
                 )
         : _buildLoaded(data);
@@ -426,12 +426,12 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
             key: kWorkspaceSessionSearchKey,
             autofocus: widget.view == WorkspaceSessionView.search,
             decoration: InputDecoration(
-              hintText: 'Search conversations',
+              hintText: '搜索会话',
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _query.isEmpty
                   ? null
                   : IconButton(
-                      tooltip: 'Clear search',
+                      tooltip: '清除搜索',
                       onPressed: () => setState(() => _query = ''),
                       icon: const Icon(Icons.clear),
                     ),
@@ -446,7 +446,7 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
           if (sessions.isEmpty)
             EmptyState(
               icon: _emptyIcon,
-              title: _query.isEmpty ? 'Nothing here' : 'No matches',
+              title: _query.isEmpty ? '暂无内容' : '无匹配项',
               message: _emptyMessage,
             )
           else
@@ -522,7 +522,7 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  session.title.isEmpty ? 'Untitled chat' : session.title,
+                  session.title.isEmpty ? '未命名会话' : session.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -543,7 +543,7 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
                       status: session.isActive
                           ? HermesStatus.running
                           : HermesStatus.completed,
-                      label: session.isActive ? 'Running' : 'Done',
+                      label: session.isActive ? '运行中' : '已完成',
                     ),
                     if (projectLabel != null)
                       _MetaChip(
@@ -552,7 +552,7 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
                       )
                     else if (data.projectsKnown)
                       _MetaChip(
-                        label: 'Unassigned',
+                        label: '未分配',
                         icon: Icons.inbox_outlined,
                       ),
                     Text(
@@ -574,8 +574,8 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
                   )
                 : IconButton(
                     tooltip: _isUnassignedSurface
-                        ? 'Move to project'
-                        : 'Promote to project',
+                        ? '移动至项目'
+                        : '提升至项目',
                     onPressed: () => unawaited(_promote(session)),
                     icon: const Icon(Icons.drive_file_move_outline),
                   ),
@@ -602,20 +602,20 @@ class _WorkspaceSessionsScreenState extends State<WorkspaceSessionsScreen> {
     if (widget.embedded) {
       return switch (_filter) {
         WorkspaceChatsFilter.unassigned =>
-          'Every conversation is already assigned to a Project.',
-        WorkspaceChatsFilter.archived => 'Archived conversations appear here.',
+          '所有会话都已分配到项目。',
+        WorkspaceChatsFilter.archived => '已归档的会话将显示在此处。',
         WorkspaceChatsFilter.recent =>
-          'Nothing changed in the last seven days.',
-        WorkspaceChatsFilter.all => 'No conversation matches this view.',
+          '最近 7 天内无任何动态。',
+        WorkspaceChatsFilter.all => '没有匹配此视图的会话。',
       };
     }
     return switch (widget.view) {
       WorkspaceSessionView.unassigned =>
-        'Every conversation is already assigned to a Project.',
+        '所有会话都已分配到项目。',
       WorkspaceSessionView.archivedQuick =>
-        'Quick chats appear here after their retention period.',
+        '快速会话在保留期过后将显示在此处。',
       WorkspaceSessionView.all ||
-      WorkspaceSessionView.search => 'No conversation matches this view.',
+      WorkspaceSessionView.search => '没有匹配此视图的会话。',
     };
   }
 

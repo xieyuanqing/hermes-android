@@ -88,7 +88,7 @@ void main() {
 
     expect(session.recoverCount, 1);
     expect(session.submitCount, 0);
-    expect(find.text('Recovering Hermes…'), findsOneWidget);
+    expect(find.text('正在恢复 Hermes…'), findsOneWidget);
 
     for (final state in const <AppLifecycleState>[
       AppLifecycleState.inactive,
@@ -136,7 +136,7 @@ void main() {
     await _pumpChat(tester, turnSession: session);
 
     await tester.enterText(find.byType(TextField), 'Raw user prompt');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pumpAndSettle();
 
     expect(session.submitCount, 1);
@@ -167,7 +167,7 @@ void main() {
     await history.firstMessagesUri.future;
 
     await tester.enterText(find.byType(TextField), 'Durable turn');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     expect(session.submitCount, 1);
 
@@ -210,13 +210,13 @@ void main() {
     hook.handler?.call(DesktopConnectionState.connected);
     await tester.pump();
     await tester.enterText(find.byType(TextField), 'Durable turn');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     expect(session.submitCount, 1);
 
     hook.handler?.call(DesktopConnectionState.reconnecting);
     await tester.pump();
-    expect(find.textContaining('will reattach automatically'), findsNothing);
+    expect(find.textContaining('自动重新关联'), findsNothing);
     hook.handler?.call(DesktopConnectionState.connected);
     submitGate.complete();
     await tester.pumpAndSettle();
@@ -237,7 +237,7 @@ void main() {
     final sendButton = tester.widget<IconButton>(
       find.widgetWithIcon(IconButton, Icons.send),
     );
-    expect(find.text('Recovering Hermes…'), findsOneWidget);
+    expect(find.text('正在恢复 Hermes…'), findsOneWidget);
     expect(sendButton.onPressed, isNull);
     expect(session.submitCount, 0);
 
@@ -267,7 +267,7 @@ void main() {
     await _pumpChat(tester, turnSession: session);
 
     await tester.enterText(find.byType(TextField), 'Fix this prompt');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
 
     expect(session.submitCount, 1);
@@ -276,7 +276,7 @@ void main() {
       'Fix this prompt',
     );
     expect(
-      find.text('Send failed: JsonRpcError(prompt.submit): Prompt rejected'),
+      find.text('发送失败：JsonRpcError(prompt.submit): Prompt rejected'),
       findsOneWidget,
     );
     expect(
@@ -315,18 +315,18 @@ void main() {
       );
 
       expect(
-        find.text('Background recovery unavailable — legacy transport'),
+        find.text('传统传输模式下后台恢复不可用'),
         findsOneWidget,
       );
       await tester.enterText(find.byType(TextField), 'Legacy once');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pumpAndSettle();
 
       expect(legacySubmitCount, 1);
       expect(session.submitCount, 0);
       expect(session.stageCount, 0);
       expect(
-        find.text('Background recovery unavailable — legacy transport'),
+        find.text('传统传输模式下后台恢复不可用'),
         findsOneWidget,
       );
     },
@@ -360,16 +360,16 @@ void main() {
 
       expect(
         find.text(
-          "This server doesn't offer background recovery — chats run live",
+          '此服务器不提供后台恢复功能 — 会话保持实时运行',
         ),
         findsOneWidget,
       );
       expect(
-        find.text('Background recovery unavailable — legacy transport'),
+        find.text('传统传输模式下后台恢复不可用'),
         findsNothing,
       );
       await tester.enterText(find.byType(TextField), 'Stock send');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pumpAndSettle();
 
       expect(legacySubmitCount, 1);
@@ -411,7 +411,7 @@ void main() {
 
       expect(history.messageRequestCount, 1);
       await tester.enterText(find.byType(TextField), 'Finish in background');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
 
       for (final state in const <AppLifecycleState>[
@@ -481,7 +481,7 @@ void main() {
         );
 
         expect(
-          find.text('Background recovery unavailable — legacy transport'),
+          find.text('传统传输模式下后台恢复不可用'),
           findsNothing,
         );
         expect(
@@ -554,7 +554,7 @@ void main() {
     );
 
     await tester.enterText(find.byType(TextField), 'Mixed legacy');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pumpAndSettle();
 
     expect(uploads, <String>['photo.png', 'notes.txt']);
@@ -614,12 +614,12 @@ void main() {
     hook.handler?.call(DesktopConnectionState.connected);
     await tester.pump();
     await tester.enterText(find.byType(TextField), 'Upload first');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     hook.handler?.call(DesktopConnectionState.reconnecting);
     await tester.pump();
 
-    expect(find.textContaining('will reattach automatically'), findsNothing);
+    expect(find.textContaining('自动重新关联'), findsNothing);
     uploadGate.completeError(StateError('upload connection closed'));
     await tester.pump();
     await tester.pumpAndSettle();

@@ -146,7 +146,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(EmptyState), findsOneWidget);
-    expect(find.textContaining('No chats'), findsOneWidget);
+    expect(find.textContaining('暂无会话'), findsOneWidget);
   });
 
   testWidgets('a failed first read is retryable', (tester) async {
@@ -174,7 +174,7 @@ void main() {
 
     expect(find.byType(ErrorState), findsOneWidget);
 
-    await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('重试'));
     await tester.pumpAndSettle();
 
     expect(find.text('Ship the Files workspace'), findsNothing);
@@ -216,7 +216,7 @@ void main() {
     // The chat the user was reading survives the failed refresh.
     expect(find.text('Ship the Files browser'), findsOneWidget);
     expect(find.byType(ErrorState), findsNothing);
-    expect(find.textContaining('Offline'), findsOneWidget);
+    expect(find.textContaining('离线'), findsOneWidget);
   });
 
   testWidgets('an older gateway explains itself and claims nothing', (
@@ -235,7 +235,7 @@ void main() {
     // support, and a red error would blame the user for an old server.
     expect(find.byType(EmptyState), findsNothing);
     expect(find.byType(ErrorState), findsOneWidget);
-    expect(find.textContaining('does not support'), findsOneWidget);
+    expect(find.textContaining('尚不支持'), findsOneWidget);
   });
 
   testWidgets('Overview reports the counts the server sent', (tester) async {
@@ -251,7 +251,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Overview'));
+    await tester.tap(find.text('概览'));
     await tester.pumpAndSettle();
 
     // Deriving the count from the rows on screen would report 1.
@@ -271,7 +271,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (final tab in ['Chats', 'Overview', 'Files', 'Assets', 'Activity']) {
+    for (final tab in ['会话', '概览', '文件', '媒体与产物', '动态']) {
       expect(find.text(tab), findsWidgets, reason: '$tab tab must exist');
     }
   });
@@ -288,7 +288,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Files'));
+    await tester.tap(find.text('文件'));
     await tester.pumpAndSettle();
 
     expect(find.text('/home/carlos/dev/hermes-android'), findsWidgets);
@@ -307,11 +307,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Assets'));
+    await tester.tap(find.text('媒体与产物'));
     await tester.pumpAndSettle();
 
     expect(
-      find.textContaining('server-authoritative Assets index'),
+      find.textContaining('服务端权威媒体与产物索引'),
       findsOneWidget,
     );
   });
@@ -346,11 +346,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Activity'));
+    await tester.tap(find.text('动态'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Running'), findsOneWidget);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('运行中'), findsOneWidget);
+    expect(find.text('已完成'), findsOneWidget);
   });
 
   testWidgets('opening a chat reports the session the server sent', (
@@ -406,8 +406,8 @@ void main() {
 
     await tester.tap(find.byKey(const Key('move-session-s-42')));
     await tester.pumpAndSettle();
-    expect(find.text('Move conversation'), findsOneWidget);
-    expect(find.text('Unassigned'), findsOneWidget);
+    expect(find.text('移动会话'), findsOneWidget);
+    expect(find.text('未分配'), findsOneWidget);
     expect(find.text('ScriptHive'), findsOneWidget);
     // The current Project remains only in the app bar, never as a destination.
     expect(find.text('Hermes Android'), findsOneWidget);
@@ -417,7 +417,7 @@ void main() {
 
     expect(moves, ['p2']);
     expect(refreshes, [false, true]);
-    expect(find.text('Moved to ScriptHive'), findsOneWidget);
+    expect(find.text('已移动到 ScriptHive'), findsOneWidget);
   });
 
   testWidgets('project actions rename and archive through explicit flows', (
@@ -437,25 +437,25 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Rename project'));
+    await tester.tap(find.text('重命名项目'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const Key('rename-project-name')),
       'Mobile',
     );
-    await tester.tap(find.widgetWithText(FilledButton, 'Rename'));
+    await tester.tap(find.widgetWithText(FilledButton, '重命名'));
     await tester.pumpAndSettle();
     expect(renamed, ['Mobile']);
     expect(find.text('Mobile'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Archive project'));
+    await tester.tap(find.text('归档项目'));
     await tester.pumpAndSettle();
-    expect(find.text('Archive Mobile?'), findsOneWidget);
-    await tester.tap(find.widgetWithText(FilledButton, 'Archive'));
+    expect(find.text('归档 Mobile？'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, '归档'));
     await tester.pumpAndSettle();
     expect(archives, 1);
   });
@@ -476,24 +476,24 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete project'));
+    await tester.tap(find.text('删除项目'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Delete Hermes Android?'), findsOneWidget);
-    expect(find.textContaining('Chats will not be deleted'), findsOneWidget);
-    expect(find.textContaining('Unassigned'), findsOneWidget);
+    expect(find.text('删除 Hermes Android？'), findsOneWidget);
+    expect(find.textContaining('会话不会被删除'), findsOneWidget);
+    expect(find.textContaining('未分配'), findsOneWidget);
 
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
     expect(deletions, 0);
 
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete project'));
+    await tester.tap(find.text('删除项目'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await tester.tap(find.widgetWithText(TextButton, '删除'));
     await tester.pumpAndSettle();
 
     expect(deletions, 1);
@@ -513,16 +513,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Project actions'));
+    await tester.tap(find.byTooltip('项目操作'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete project'));
+    await tester.tap(find.text('删除项目'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await tester.tap(find.widgetWithText(TextButton, '删除'));
     await tester.pumpAndSettle();
 
     expect(find.byType(ProjectDetailScreen), findsOneWidget);
-    expect(find.text('Couldn’t delete project'), findsOneWidget);
-    expect(find.text('Retry'), findsOneWidget);
+    expect(find.text('无法删除项目'), findsOneWidget);
+    expect(find.text('重试'), findsOneWidget);
   });
 
   testWidgets('pull to refresh forces a live read', (tester) async {
@@ -609,7 +609,7 @@ void main() {
       expect(find.text('Review the draft'), findsOneWidget);
       expect(find.text('Ship the Files browser'), findsNothing);
 
-      await tester.tap(find.byTooltip('Clear search'));
+      await tester.tap(find.byTooltip('清空搜索'));
       await tester.pumpAndSettle();
 
       expect(find.text('Ship the Files browser'), findsOneWidget);
@@ -632,7 +632,7 @@ void main() {
 
       expect(find.byKey(kProjectSearchFieldKey), findsNothing);
       expect(find.byType(EmptyState), findsOneWidget);
-      expect(find.textContaining('No chats'), findsOneWidget);
+      expect(find.textContaining('暂无会话'), findsOneWidget);
     });
 
     testWidgets('a query with no match shows a distinct no-match state', (
@@ -645,9 +645,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(EmptyState), findsOneWidget);
-      expect(find.text('No matches'), findsOneWidget);
+      expect(find.text('无匹配项'), findsOneWidget);
       // Never the "empty project" claim: the chat may exist elsewhere.
-      expect(find.textContaining('No chats yet'), findsNothing);
+      expect(find.textContaining('暂无会话'), findsNothing);
     });
 
     testWidgets('a filtered row still opens its chat', (tester) async {

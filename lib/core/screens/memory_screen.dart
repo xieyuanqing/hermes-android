@@ -113,10 +113,10 @@ class _MemoryScreenState extends State<MemoryScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Memory'),
+            const Text('记忆'),
             if (_source != null)
               Text(
-                'Source: $_source',
+                '来源：$_source',
                 style: const TextStyle(fontSize: 11, color: Colors.grey),
               ),
           ],
@@ -147,7 +147,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
               const Icon(Icons.error_outline, size: 48, color: Colors.orange),
               const SizedBox(height: 16),
               Text(
-                'Failed to load memory',
+                '无法加载记忆',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -159,7 +159,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _loadMemory,
-                child: const Text('Retry'),
+                child: const Text('重试'),
               ),
             ],
           ),
@@ -175,13 +175,13 @@ class _MemoryScreenState extends State<MemoryScreen> {
             Icon(Icons.psychology, size: 48, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No memory entries',
+              '暂无记忆条目',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Memory entries are cross-session facts the agent remembers.\n'
-              'They are configured in ~/.hermes/config.yaml',
+              '记忆条目是智能体跨会话记住的事实信息。\n'
+              '可在 ~/.hermes/config.yaml 中配置',
               textAlign: TextAlign.center,
               style: Theme.of(
                 context,

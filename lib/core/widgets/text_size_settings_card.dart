@@ -55,13 +55,12 @@ class _TextSizeSettingsCardState extends State<TextSizeSettingsCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Text size',
+                  '文字大小',
                   style: Theme.of(sheetContext).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Explicit choices adjust Android accessibility text size; '
-                  'System leaves it unchanged.',
+                  '明确的选项会调节 Android 无障碍文字大小；跟随系统则保持不变。',
                 ),
                 const SizedBox(height: 8),
                 RadioGroup<TextSizePreference>(
@@ -95,12 +94,12 @@ class _TextSizeSettingsCardState extends State<TextSizeSettingsCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Semantics(
-            label: 'Text size: ${_preference.label}',
+            label: '文字大小：${_preference.label}',
             button: true,
             child: ExcludeSemantics(
               child: ListTile(
                 leading: const Icon(Icons.format_size),
-                title: const Text('Text size'),
+                title: const Text('文字大小'),
                 subtitle: Text(
                   '${_preference.label} — ${_preference.description}',
                 ),
@@ -113,10 +112,10 @@ class _TextSizeSettingsCardState extends State<TextSizeSettingsCard> {
           Padding(
             padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
             child: Semantics(
-              label: 'Text size preview',
+              label: '文字大小预览',
               child: ExcludeSemantics(
                 child: Text(
-                  'Preview',
+                  '预览',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -125,7 +124,7 @@ class _TextSizeSettingsCardState extends State<TextSizeSettingsCard> {
           const Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Text(
-              'Hermes keeps Android accessibility text scaling active.',
+              'Hermes 会保持 Android 无障碍文字缩放生效。',
             ),
           ),
         ],

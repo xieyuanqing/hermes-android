@@ -99,7 +99,7 @@ void main() {
 
       final projectChat = _option(options, NewChatMode.projectChat);
       expect(projectChat.enabled, isFalse);
-      expect(projectChat.disabledReason, contains('gateway'));
+      expect(projectChat.disabledReason, contains('Gateway'));
     });
 
     test('a supported gateway with no project yet asks for one instead of '
@@ -112,7 +112,7 @@ void main() {
       final projectChat = _option(options, NewChatMode.projectChat);
       expect(projectChat.enabled, isFalse);
       expect(projectChat.disabledReason, isNotNull);
-      expect(projectChat.disabledReason, isNot(contains('gateway')));
+      expect(projectChat.disabledReason, isNot(contains('Gateway')));
     });
 
     test(
@@ -127,8 +127,8 @@ void main() {
 
         final projectChat = _option(options, NewChatMode.projectChat);
         expect(projectChat.enabled, isFalse);
-        expect(projectChat.disabledReason, isNot(contains('gateway')));
-        expect(projectChat.disabledReason?.toLowerCase(), contains('loading'));
+        expect(projectChat.disabledReason, isNot(contains('Gateway')));
+        expect(projectChat.disabledReason, contains('加载'));
       },
     );
 
@@ -207,7 +207,7 @@ void main() {
         now: _now,
       );
 
-      expect(draft.session.title.toLowerCase(), contains('quick'));
+      expect(draft.session.title, contains('快速'));
     });
 
     test('a quick chat carries its 72 hour archive deadline', () {

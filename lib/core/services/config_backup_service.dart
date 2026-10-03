@@ -32,13 +32,13 @@ class ConfigImportResult {
 
   String get summary {
     final parts = <String>[];
-    if (connectionsAdded > 0) parts.add('$connectionsAdded added');
-    if (connectionsUpdated > 0) parts.add('$connectionsUpdated updated');
-    if (connectionsRemoved > 0) parts.add('$connectionsRemoved removed');
+    if (connectionsAdded > 0) parts.add('$connectionsAdded 个新增');
+    if (connectionsUpdated > 0) parts.add('$connectionsUpdated 个更新');
+    if (connectionsRemoved > 0) parts.add('$connectionsRemoved 个移除');
     final connections = parts.isEmpty
-        ? 'No connection changes'
-        : 'Connections: ${parts.join(', ')}';
-    return '$connections · $preferencesApplied settings restored';
+        ? '无连接变更'
+        : '连接：${parts.join(' · ')}';
+    return '$connections · 已恢复 $preferencesApplied 项设置';
   }
 }
 

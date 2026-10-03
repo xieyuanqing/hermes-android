@@ -47,18 +47,18 @@ void main() {
       ),
     );
 
-    expect(find.byTooltip('Copy message'), findsNothing);
+    expect(find.byTooltip('复制消息'), findsNothing);
     expect(find.byKey(const Key('message-bubble')), findsOneWidget);
 
     await tester.longPress(find.byKey(const Key('message-bubble')));
     await tester.pumpAndSettle();
-    expect(find.text('Message actions'), findsOneWidget);
-    await tester.tap(find.byTooltip('Copy message'));
+    expect(find.text('消息操作'), findsOneWidget);
+    await tester.tap(find.byTooltip('复制消息'));
     await tester.pump();
 
     final clipboard = await Clipboard.getData(Clipboard.kTextPlain);
     expect(clipboard?.text, message);
-    expect(find.text('Message copied'), findsOneWidget);
+    expect(find.text('消息已复制'), findsOneWidget);
   });
 
   testWidgets('assistant message exposes a read aloud action', (
@@ -80,11 +80,11 @@ void main() {
       ),
     );
 
-    expect(find.byTooltip('Read aloud'), findsNothing);
+    expect(find.byTooltip('朗读'), findsNothing);
     await tester.longPress(find.byKey(const Key('message-bubble')));
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Read aloud'), findsOneWidget);
-    await tester.tap(find.byTooltip('Read aloud'));
+    expect(find.byTooltip('朗读'), findsOneWidget);
+    await tester.tap(find.byTooltip('朗读'));
     await tester.pump();
     expect(readAloudCalls, 1);
   });
@@ -100,12 +100,12 @@ void main() {
       ),
     );
 
-    expect(find.byTooltip('Copy message'), findsNothing);
-    expect(find.byTooltip('Read aloud'), findsNothing);
+    expect(find.byTooltip('复制消息'), findsNothing);
+    expect(find.byTooltip('朗读'), findsNothing);
     await tester.longPress(find.byKey(const Key('message-bubble')));
     await tester.pumpAndSettle();
-    expect(find.byTooltip('Copy message'), findsOneWidget);
-    expect(find.byTooltip('Read aloud'), findsNothing);
+    expect(find.byTooltip('复制消息'), findsOneWidget);
+    expect(find.byTooltip('朗读'), findsNothing);
   });
 
   testWidgets('message actions wrap and retain semantics at font scale 200%', (
@@ -141,10 +141,10 @@ void main() {
       await tester.longPress(find.byKey(const Key('message-bubble')));
       await tester.pumpAndSettle();
       for (final label in const [
-        'Copy message',
-        'Read aloud',
-        'Edit and resend',
-        'Regenerate response',
+        '复制消息',
+        '朗读',
+        '编辑并重新发送',
+        '重新生成响应',
       ]) {
         final action = find.bySemanticsLabel(label);
         expect(action, findsOneWidget);
@@ -176,7 +176,7 @@ void main() {
       ),
     );
 
-    expect(find.text('You'), findsOneWidget);
+    expect(find.text('你'), findsOneWidget);
     expect(find.text('Hermes'), findsOneWidget);
   });
 
@@ -250,16 +250,16 @@ void main() {
 
     expect(find.byKey(const Key('markdown-code-block')), findsOneWidget);
     expect(find.text('dart'), findsOneWidget);
-    expect(find.byTooltip('Copy code'), findsOneWidget);
-    expect(find.byTooltip('Wrap lines'), findsOneWidget);
+    expect(find.byTooltip('复制代码'), findsOneWidget);
+    expect(find.byTooltip('自动换行'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Copy code'));
+    await tester.tap(find.byTooltip('复制代码'));
     await tester.pump();
     expect(clipboardText, 'void main() => print("Hermes");\n');
 
-    await tester.tap(find.byTooltip('Wrap lines'));
+    await tester.tap(find.byTooltip('自动换行'));
     await tester.pump();
-    expect(find.byTooltip('Scroll horizontally'), findsOneWidget);
+    expect(find.byTooltip('单行横向滚动'), findsOneWidget);
   });
 }
 

@@ -41,11 +41,11 @@ void main() {
         ),
       );
 
-      expect(find.text('Running'), findsOneWidget);
-      expect(find.text('Needs you'), findsOneWidget);
-      expect(find.text('Failed'), findsOneWidget);
-      expect(find.text('Done'), findsOneWidget);
-      expect(find.text('Idle'), findsOneWidget);
+      expect(find.text('运行中'), findsOneWidget);
+      expect(find.text('需要您处理'), findsOneWidget);
+      expect(find.text('失败'), findsOneWidget);
+      expect(find.text('已完成'), findsOneWidget);
+      expect(find.text('空闲'), findsOneWidget);
     });
 
     testWidgets('a custom label replaces the default wording', (tester) async {
@@ -55,7 +55,7 @@ void main() {
       );
 
       expect(find.text('3 running'), findsOneWidget);
-      expect(find.text('Running'), findsNothing);
+      expect(find.text('运行中'), findsNothing);
     });
 
     testWidgets('takes its color from the status token', (tester) async {
@@ -63,7 +63,7 @@ void main() {
 
       final context = tester.element(find.byType(StatusChip));
       final tokens = HermesTokens.of(context);
-      final text = tester.widget<Text>(find.text('Needs you'));
+      final text = tester.widget<Text>(find.text('需要您处理'));
 
       expect(text.style?.color, tokens.blocked);
     });
@@ -71,7 +71,7 @@ void main() {
     testWidgets('announces its visible label exactly once', (tester) async {
       await _pump(tester, const StatusChip(status: HermesStatus.idle));
 
-      expect(tester.getSemantics(find.byType(StatusChip)).label, 'Idle');
+      expect(tester.getSemantics(find.byType(StatusChip)).label, '空闲');
     });
 
     testWidgets('exposes its state to screen readers', (tester) async {
@@ -79,7 +79,7 @@ void main() {
 
       expect(
         tester.getSemantics(find.byType(StatusChip)).label,
-        contains('Failed'),
+        contains('失败'),
       );
     });
   });
@@ -225,7 +225,7 @@ void main() {
       );
 
       expect(find.text('Gateway unreachable'), findsOneWidget);
-      await tester.tap(find.text('Retry'));
+      await tester.tap(find.text('重试'));
       expect(retries, 1);
     });
 
@@ -272,7 +272,7 @@ void main() {
       );
 
       expect(icon.color, tokens.muted);
-      expect(find.text('Retry'), findsNothing);
+      expect(find.text('重试'), findsNothing);
     });
   });
 
@@ -294,7 +294,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       final semantics = tester.getSemantics(find.byType(LoadingSkeleton));
-      expect(semantics.label, contains('Loading'));
+      expect(semantics.label, contains('加载中'));
     });
 
     testWidgets('animates without throwing and settles when disposed', (
@@ -335,7 +335,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(find.text('Attention'), findsOneWidget);
-      expect(find.text('Needs you'), findsOneWidget);
+      expect(find.text('需要您处理'), findsOneWidget);
       expect(find.text('Card'), findsOneWidget);
     });
 

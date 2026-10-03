@@ -4,10 +4,10 @@ import '../theme/hermes_theme.dart';
 
 /// Transport state shown in the sticky chat context header.
 enum ChatConnectionStatus {
-  connecting('connecting'),
-  connected('connected'),
-  reconnecting('reconnecting'),
-  offline('offline');
+  connecting('连接中'),
+  connected('已连接'),
+  reconnecting('重新连接中'),
+  offline('离线');
 
   final String label;
   const ChatConnectionStatus(this.label);
@@ -56,7 +56,7 @@ class ChatContextHeader extends StatelessWidget {
               _ContextChip(
                 icon: Icons.folder_outlined,
                 label: project == null || project.isEmpty
-                    ? 'Unassigned'
+                    ? '未分配'
                     : project,
               ),
               const SizedBox(width: HermesSpacing.sm),
@@ -97,8 +97,17 @@ class ChatContextHeader extends StatelessWidget {
 
   String _reasoningLabel(String value) {
     final normalized = value.trim().toLowerCase();
-    if (normalized.isEmpty || normalized == 'none') return 'Off';
-    return normalized[0].toUpperCase() + normalized.substring(1);
+    return switch (normalized) {
+      'none' || '' => '关闭',
+      'minimal' => '极低',
+      'low' => '低',
+      'medium' => '中',
+      'high' => '高',
+      'xhigh' => '超高',
+      'max' => '极大',
+      'ultra' => '极致',
+      _ => normalized[0].toUpperCase() + normalized.substring(1),
+    };
   }
 }
 

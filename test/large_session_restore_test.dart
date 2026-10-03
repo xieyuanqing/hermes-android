@@ -85,7 +85,7 @@ void main() {
         find.byKey(const Key('chat-message-composer')),
         'Prompt while history is loading',
       );
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
 
@@ -169,7 +169,7 @@ void main() {
         find.byKey(const Key('chat-message-composer')),
         'Keep this draft',
       );
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
 
       httpClient.release();
@@ -245,7 +245,7 @@ void main() {
         find.byKey(const Key('chat-message-composer')),
         'First turn',
       );
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       httpClient.releaseFirst();
       await httpClient.deferredRefreshUri.future;
@@ -254,7 +254,7 @@ void main() {
         find.byKey(const Key('chat-message-composer')),
         'Second turn',
       );
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       expect(submitted, 2);
 
@@ -331,13 +331,13 @@ void main() {
       find.byKey(const Key('chat-message-composer')),
       'Stop this turn',
     );
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     httpClient.release();
     await httpClient.firstResponseReturned.future;
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Stop response'));
+    await tester.tap(find.byTooltip('停止响应'));
     await httpClient.refreshedMessagesUri.future;
     submitGate.complete();
     await tester.pumpAndSettle();

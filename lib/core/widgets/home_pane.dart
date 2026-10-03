@@ -123,10 +123,9 @@ class HomePaneState extends State<HomePane> {
     if (sessions == null) {
       if (_error != null) {
         return ErrorState(
-          title: 'Could not reach Hermes',
+          title: '无法连接到 Hermes',
           message:
-              'Home needs your recent chats to know what deserves your '
-              'attention. Check that the gateway is reachable, then try again.',
+              '首页需要获取您最近的会话以了解哪些内容需要您处理。请检查 Gateway 是否可访问，然后重试。',
           onRetry: _load,
         );
       }
@@ -159,10 +158,9 @@ class HomePaneState extends State<HomePane> {
               ),
               child: const EmptyState(
                 icon: Icons.check_circle_outline,
-                title: 'Nothing needs you',
+                title: '无需处理',
                 message:
-                    'No chat is blocked, running, or waiting to be resumed. '
-                    'Start a new one whenever you are ready.',
+                    '没有受阻、正在运行或等待继续的会话。随时可以开启新会话。',
               ),
             )
           else
@@ -213,7 +211,7 @@ class _OverflowNote extends StatelessWidget {
         HermesSpacing.lg,
       ),
       child: Text(
-        'and $count more',
+        '还有 $count 项',
         style: tokens.typography.label.copyWith(color: tokens.muted),
       ),
     );
@@ -243,7 +241,7 @@ class _OfflineBanner extends StatelessWidget {
             const SizedBox(width: HermesSpacing.sm),
             Expanded(
               child: Text(
-                'Offline — showing the last known activity.',
+                '离线 — 正在显示最后已知活动。',
                 style: tokens.typography.label.copyWith(color: tokens.muted),
               ),
             ),
@@ -264,7 +262,7 @@ class _HomeItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = HermesTokens.of(context);
     final title = item.session.title.trim().isEmpty
-        ? 'Untitled chat'
+        ? '未命名会话'
         : item.session.title;
     final project = item.projectName;
     final reason = item.attentionLabel;

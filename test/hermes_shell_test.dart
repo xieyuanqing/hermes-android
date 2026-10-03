@@ -109,7 +109,7 @@ void main() {
     testWidgets('switches panes when a destination is tapped', (tester) async {
       await _pumpShell(tester);
 
-      await tester.tap(find.text('Projects'));
+      await tester.tap(find.text('项目'));
       await tester.pumpAndSettle();
 
       expect(find.text('pane:projects'), findsOneWidget);
@@ -122,9 +122,9 @@ void main() {
       final changes = <HermesDestination>[];
       await _pumpShell(tester, onDestinationChanged: changes.add);
 
-      await tester.tap(find.text('Activity'));
+      await tester.tap(find.text('动态'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('More'));
+      await tester.tap(find.text('更多'));
       await tester.pumpAndSettle();
 
       expect(changes, [HermesDestination.activity, HermesDestination.more]);
@@ -136,7 +136,7 @@ void main() {
       final changes = <HermesDestination>[];
       await _pumpShell(tester, onDestinationChanged: changes.add);
 
-      await tester.tap(find.text('Home'));
+      await tester.tap(find.text('首页'));
       await tester.pumpAndSettle();
 
       expect(changes, isEmpty);
@@ -196,7 +196,7 @@ void main() {
     testWidgets('the rail keeps navigation working', (tester) async {
       await _pumpShell(tester, size: const Size(900, 700));
 
-      await tester.tap(find.text('Activity'));
+      await tester.tap(find.text('动态'));
       await tester.pumpAndSettle();
 
       expect(find.text('pane:activity'), findsOneWidget);

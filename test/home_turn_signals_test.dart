@@ -123,7 +123,7 @@ void main() {
       ],
     );
 
-    expect(signals.attention, {'session-a': 'Waiting for your input'});
+    expect(signals.attention, {'session-a': '等待您的输入'});
     expect(signals.running, isEmpty);
   });
 
@@ -134,7 +134,7 @@ void main() {
       [_entry(binding: binding, status: GatewayRecoveryTurnStatus.failed)],
     );
 
-    expect(signals.attention, {'session-a': 'The last turn failed'});
+    expect(signals.attention, {'session-a': '上一轮次失败'});
     expect(signals.running, isEmpty);
   });
 
@@ -153,7 +153,7 @@ void main() {
       ],
     );
 
-    expect(signals.attention, {'session-a': 'Turn recovery failed'});
+    expect(signals.attention, {'session-a': '轮次恢复失败'});
     expect(signals.running, isEmpty);
   });
 
@@ -213,7 +213,7 @@ void main() {
       ],
     );
 
-    expect(signals.attention, {'session-a': 'Waiting for your input'});
+    expect(signals.attention, {'session-a': '等待您的输入'});
   });
 
   test('a stale running turn is dropped rather than shown as live', () {
@@ -247,7 +247,7 @@ void main() {
       ],
     );
 
-    expect(signals.attention, {'session-a': 'The last turn failed'});
+    expect(signals.attention, {'session-a': '上一轮次失败'});
   });
 
   test('a clock skewed behind the journal keeps the turn running', () {

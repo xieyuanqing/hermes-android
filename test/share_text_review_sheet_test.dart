@@ -64,10 +64,10 @@ void main() {
       ),
     );
 
-    expect(find.text('2 attachments'), findsOneWidget);
+    expect(find.text('2 个附件'), findsOneWidget);
     expect(find.text('report.pdf'), findsOneWidget);
     expect(find.text('photo.jpg'), findsOneWidget);
-    expect(find.text('No text shared'), findsOneWidget);
+    expect(find.text('未分享文本'), findsOneWidget);
   });
 
   testWidgets('requires confirmation and returns action plus destination', (
@@ -98,16 +98,16 @@ void main() {
     await tester.tap(find.text('Open'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Share to Hermes'), findsOneWidget);
-    expect(find.text('Summarize'), findsOneWidget);
-    expect(find.text('Quick chat'), findsOneWidget);
-    expect(find.text('Project chat'), findsOneWidget);
+    expect(find.text('分享至 Hermes'), findsOneWidget);
+    expect(find.text('总结'), findsOneWidget);
+    expect(find.text('快速会话'), findsOneWidget);
+    expect(find.text('项目会话'), findsOneWidget);
 
-    await tester.tap(find.text('Summarize'));
-    await tester.ensureVisible(find.text('Project chat'));
-    await tester.tap(find.text('Project chat'));
-    await tester.ensureVisible(find.text('Continue'));
-    await tester.tap(find.text('Continue'));
+    await tester.tap(find.text('总结'));
+    await tester.ensureVisible(find.text('项目会话'));
+    await tester.tap(find.text('项目会话'));
+    await tester.ensureVisible(find.text('继续'));
+    await tester.tap(find.text('继续'));
     await tester.pumpAndSettle();
 
     expect(decision?.action, ShareFavoriteAction.summarize);
@@ -126,9 +126,9 @@ void main() {
       ),
     );
 
-    expect(find.text('No active Projects on this Gateway'), findsOneWidget);
+    expect(find.text('此 Gateway 上没有活跃项目'), findsOneWidget);
     final projectChoice = tester.widget<RadioListTile<NewChatMode>>(
-      find.widgetWithText(RadioListTile<NewChatMode>, 'Project chat'),
+      find.widgetWithText(RadioListTile<NewChatMode>, '项目会话'),
     );
     expect(projectChoice.enabled, isFalse);
   });

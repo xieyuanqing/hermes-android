@@ -50,7 +50,7 @@ class _GatewaySensitivePromptDialogState
       if (!mounted) return;
       setState(() {
         _submitting = false;
-        _error = 'Hermes did not accept the response. Please try again.';
+        _error = 'Hermes 未接受该响应。请重试。';
       });
     }
   }
@@ -102,8 +102,7 @@ class _GatewaySensitivePromptDialogState
             ],
             const SizedBox(height: 10),
             Text(
-              'The value is sent directly to the active Hermes gateway and '
-              'is not saved by this Android app.',
+              '该值直接发送至活跃的 Hermes Gateway，本 Android 应用不会保存。',
               style: theme.textTheme.bodySmall,
             ),
           ],
@@ -113,7 +112,7 @@ class _GatewaySensitivePromptDialogState
         TextButton(
           key: const Key('sensitive-prompt-cancel'),
           onPressed: _submitting ? null : () => _respond(''),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           key: const Key('sensitive-prompt-send'),
@@ -125,7 +124,7 @@ class _GatewaySensitivePromptDialogState
                   dimension: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Send'),
+              : const Text('发送'),
         ),
       ],
     );

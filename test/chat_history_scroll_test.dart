@@ -139,30 +139,30 @@ void main() {
           );
 
           for (final label in const [
-            'Add attachment',
-            'Message',
-            'Start voice input',
-            'Spoken replies',
-            'Send message',
+            '添加附件',
+            '消息',
+            '开始语音输入',
+            '语音回复',
+            '发送消息',
           ]) {
             expect(find.bySemanticsLabel(label), findsOneWidget);
           }
           for (final tooltip in const [
-            'Attach image or file',
-            'Speak to Hermes',
-            'Send',
+            '添加图片或文件',
+            '与 Hermes 语音交流',
+            '发送',
           ]) {
             expect(tester.getSize(find.byTooltip(tooltip)), const Size(48, 48));
           }
           final messageField = tester.widget<TextField>(
             find.descendant(
-              of: find.bySemanticsLabel('Message'),
+              of: find.bySemanticsLabel('消息'),
               matching: find.byType(TextField),
             ),
           );
           expect(messageField.minLines, 1);
           expect(messageField.maxLines, 5);
-          expect(messageField.decoration?.hintText, 'Message Hermes…');
+          expect(messageField.decoration?.hintText, '给 Hermes 发送消息…');
           expect(tester.takeException(), isNull);
         }
       },
@@ -193,7 +193,7 @@ void main() {
         final controller = _chatListController(tester);
         expect(controller.position.maxScrollExtent, greaterThan(0));
         expect(controller.position.pixels, controller.position.maxScrollExtent);
-        expect(find.bySemanticsLabel('Go to end'), findsNothing);
+        expect(find.bySemanticsLabel('回到底部'), findsNothing);
       },
     );
 
@@ -244,7 +244,7 @@ void main() {
         sessionId: 'history-session',
       );
       await tester.enterText(find.byType(TextField), 'current question');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await client.postStarted.future;
 
@@ -281,14 +281,14 @@ void main() {
 
         controller.jumpTo(80);
         await tester.pump();
-        await tester.tap(find.byTooltip('Chat actions'));
+        await tester.tap(find.byTooltip('会话操作'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Refresh'));
+        await tester.tap(find.text('刷新'));
         await tester.pumpAndSettle();
         expect(controller.position.pixels, closeTo(80, 0.01));
 
         await tester.enterText(find.byType(TextField), 'stay in history');
-        await tester.tap(find.byTooltip('Send'));
+        await tester.tap(find.byTooltip('发送'));
         await tester.pump();
         await client.postStarted.future;
 
@@ -296,14 +296,14 @@ void main() {
         await tester.pump();
         await tester.pump();
         final historyPosition = controller.position.pixels;
-        expect(_indicatorText(tester), '1 new');
-        expect(_goToEndSemantics(tester).value, '1 new message');
+        expect(_indicatorText(tester), '1 条新消息');
+        expect(_goToEndSemantics(tester).value, '1 条新消息');
 
         client.emitToken(' and a second delta of the same message');
         await tester.pump();
         await tester.pump();
         expect(controller.position.pixels, closeTo(historyPosition, 0.01));
-        expect(_indicatorText(tester), '1 new');
+        expect(_indicatorText(tester), '1 条新消息');
 
         client.finish([
           ...initialMessages,
@@ -316,12 +316,12 @@ void main() {
         ]);
         await tester.pumpAndSettle();
         expect(controller.position.pixels, closeTo(historyPosition, 0.01));
-        expect(_indicatorText(tester), '1 new');
+        expect(_indicatorText(tester), '1 条新消息');
 
-        await tester.tap(find.bySemanticsLabel('Go to end'));
+        await tester.tap(find.bySemanticsLabel('回到底部'));
         await tester.pumpAndSettle();
         expect(controller.position.pixels, controller.position.maxScrollExtent);
-        expect(find.bySemanticsLabel('Go to end'), findsNothing);
+        expect(find.bySemanticsLabel('回到底部'), findsNothing);
       },
     );
 
@@ -339,7 +339,7 @@ void main() {
         final controller = _chatListController(tester);
 
         await tester.enterText(find.byType(TextField), 'follow this');
-        await tester.tap(find.byTooltip('Send'));
+        await tester.tap(find.byTooltip('发送'));
         await tester.pump();
         await client.postStarted.future;
         client.emitToken(List.filled(60, 'growing response').join('\n'));
@@ -347,7 +347,7 @@ void main() {
         await tester.pump();
 
         expect(controller.position.pixels, controller.position.maxScrollExtent);
-        expect(find.bySemanticsLabel('Go to end'), findsNothing);
+        expect(find.bySemanticsLabel('回到底部'), findsNothing);
 
         client.finish([
           ...initialMessages,
@@ -375,7 +375,7 @@ void main() {
         await tester.pump();
 
         await tester.enterText(find.byType(TextField), 'remote response');
-        await tester.tap(find.byTooltip('Send'));
+        await tester.tap(find.byTooltip('发送'));
         await tester.pump();
         await remote.started.future;
 
@@ -383,12 +383,12 @@ void main() {
         await tester.pump();
         await tester.pump();
         final historyPosition = controller.position.pixels;
-        expect(_indicatorText(tester), '1 new');
+        expect(_indicatorText(tester), '1 条新消息');
 
         remote.emit('message.delta', {'text': ' second delta'});
         await tester.pump();
         await tester.pump();
-        expect(_indicatorText(tester), '1 new');
+        expect(_indicatorText(tester), '1 条新消息');
         expect(controller.position.pixels, closeTo(historyPosition, 0.01));
 
         remote.emit('message.interim', {
@@ -398,18 +398,18 @@ void main() {
         remote.emit('message.delta', {'text': 'second message'});
         await tester.pump();
         await tester.pump();
-        expect(_indicatorText(tester), '2 new');
-        expect(_goToEndSemantics(tester).value, '2 new messages');
+        expect(_indicatorText(tester), '2 条新消息');
+        expect(_goToEndSemantics(tester).value, '2 条新消息');
 
         remote.emit('message.complete', {'rendered': 'second message final'});
         remote.finish();
         await tester.pumpAndSettle();
         expect(controller.position.pixels, closeTo(historyPosition, 0.01));
-        expect(_indicatorText(tester), '2 new');
+        expect(_indicatorText(tester), '2 条新消息');
 
         await _dragToEnd(tester, controller);
         expect(controller.position.pixels, controller.position.maxScrollExtent);
-        expect(find.bySemanticsLabel('Go to end'), findsNothing);
+        expect(find.bySemanticsLabel('回到底部'), findsNothing);
       },
     );
 
@@ -436,7 +436,7 @@ void main() {
         final button = find.byKey(ChatEndAffordance.buttonKey);
         final inputBar = find.byKey(const Key('chat-input-bar'));
         expect(button, findsOneWidget);
-        expect(find.bySemanticsLabel('Attachment drafts'), findsOneWidget);
+        expect(find.bySemanticsLabel('附件草稿'), findsOneWidget);
         expect(
           tester.getRect(button).bottom,
           lessThanOrEqualTo(tester.getRect(inputBar).top),
@@ -456,11 +456,11 @@ void main() {
           serverFilePicker: () async => '/srv/project/README.md',
         );
 
-        await tester.tap(find.bySemanticsLabel('Add attachment'));
+        await tester.tap(find.bySemanticsLabel('添加附件'));
         await tester.pumpAndSettle();
-        expect(find.text('Browse server files'), findsOneWidget);
+        expect(find.text('浏览服务器文件'), findsOneWidget);
 
-        await tester.tap(find.text('Browse server files'));
+        await tester.tap(find.text('浏览服务器文件'));
         await tester.pumpAndSettle();
 
         final composer = tester.widget<TextField>(find.byType(TextField));
@@ -533,7 +533,7 @@ String? _indicatorText(WidgetTester tester) {
 }
 
 SemanticsNode _goToEndSemantics(WidgetTester tester) {
-  return tester.getSemantics(find.bySemanticsLabel('Go to end'));
+  return tester.getSemantics(find.bySemanticsLabel('回到底部'));
 }
 
 Future<void> _dragToEnd(

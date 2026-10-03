@@ -41,7 +41,7 @@ Future<String?> showSessionNameDialog({
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(dialogContext),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(dialogContext, draft.trim()),
@@ -327,7 +327,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
       final options = await _client.getModelOptions();
       final choices = AiSearchModel.configuredFromOptions(options);
       if (choices.isEmpty) {
-        throw StateError('Hermes returned no configured selectable models.');
+        throw StateError('Hermes 未返回任何已配置的可选模型。');
       }
 
       if (!mounted) return null;
@@ -347,14 +347,13 @@ class _SessionListScreenState extends State<SessionListScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'AI search model',
+                        'AI 搜索模型',
                         style: Theme.of(sheetContext).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 4),
                       const Text(
-                        'The model only rewrites your question into a short '
-                        'full-text query. Hermes uses the provider credentials '
-                        'already configured on the host.',
+                        '该模型仅将您的问题改写为简短的全文查询。'
+                        'Hermes 会使用主机上已配置的提供商凭据。',
                       ),
                     ],
                   ),
@@ -377,7 +376,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                         title: Text(choice.model),
                         subtitle: Text(
                           choice.isRecommended
-                              ? '${choice.provider} • Recommended: small and inexpensive'
+                              ? '${choice.provider} • 推荐：小巧且经济'
                               : choice.provider,
                         ),
                         trailing: isSelected
@@ -407,7 +406,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not load AI search models: $error')),
+          SnackBar(content: Text('无法加载 AI 搜索模型：$error')),
         );
       }
       return null;
@@ -436,7 +435,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
         final selected = _aiSearchModel;
         if (selected == null) {
           throw const AiSearchRewriteException(
-            'Choose an AI search model before using AI search.',
+            '使用 AI 搜索前请先选择 AI 搜索模型。',
           );
         }
         effectiveQuery = await _ensureAiRewriter().rewrite(
@@ -472,7 +471,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
     } catch (error) {
       if (!requestIsCurrent()) return;
       setState(() {
-        _searchError = 'Session search failed: $error';
+        _searchError = '会话搜索失败：$error';
         _serverResults = null;
         _searching = false;
       });
@@ -517,13 +516,13 @@ class _SessionListScreenState extends State<SessionListScreen> {
 
   PopupMenuButton<String> _buildProfileSelector() {
     return PopupMenuButton<String>(
-      tooltip: 'Switch profile',
+      tooltip: '切换配置档',
       icon: const Icon(Icons.account_tree_outlined),
       onSelected: _switchProfile,
       itemBuilder: (context) => [
         const PopupMenuItem<String>(
           enabled: false,
-          child: Text('Profile', style: TextStyle(fontWeight: FontWeight.w700)),
+          child: Text('配置档', style: TextStyle(fontWeight: FontWeight.w700)),
         ),
         ..._profiles.map(
           (profile) => PopupMenuItem<String>(
@@ -581,9 +580,9 @@ class _SessionListScreenState extends State<SessionListScreen> {
     final gateway = _desktopGateway;
     if (gateway == null) return;
     final title = await _askForName(
-      title: 'Rename chat',
+      title: '重命名会话',
       initialValue: session.title,
-      actionLabel: 'Rename',
+      actionLabel: '重命名',
     );
     if (title == null || !mounted) return;
     try {
@@ -593,7 +592,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Could not rename chat: $error')));
+      ).showSnackBar(SnackBar(content: Text('无法重命名会话：$error')));
     }
   }
 
@@ -605,9 +604,9 @@ class _SessionListScreenState extends State<SessionListScreen> {
     setState(() => _branchingSessionIds.add(session.id));
     try {
       final name = await _askForName(
-        title: 'Branch chat',
-        initialValue: '${session.title} branch',
-        actionLabel: 'Create branch',
+        title: '分支会话',
+        initialValue: '${session.title} 分支',
+        actionLabel: '创建分支',
       );
       if (name == null || !mounted) return;
       requestedName = name;
@@ -631,8 +630,8 @@ class _SessionListScreenState extends State<SessionListScreen> {
         return;
       }
       final message = error is JsonRpcError && error.code == 4008
-          ? 'This chat has no messages available in the Desktop session yet.'
-          : 'Could not branch chat: $error';
+          ? '该会话在桌面端会话中尚无可用消息。'
+          : '无法分支会话：$error';
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(message)));
@@ -645,7 +644,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
 
   void _showBranchCreated() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Branch created in Hermes history.')),
+      const SnackBar(content: Text('分支已在 Hermes 历史记录中创建。')),
     );
   }
 
@@ -677,12 +676,12 @@ class _SessionListScreenState extends State<SessionListScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const ListTile(
-              title: Text('Move chat'),
-              subtitle: Text('Choose its destination space'),
+              title: Text('移动会话'),
+              subtitle: Text('选择目标空间'),
             ),
             ListTile(
               leading: const Icon(Icons.inbox_outlined),
-              title: const Text('Unassigned'),
+              title: const Text('未分配'),
               onTap: () => Navigator.pop(sheetContext, ''),
             ),
             for (final space in _spaceState.spaces)
@@ -842,7 +841,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
       setState(() => _loadingMoreSessions = false);
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Could not load more chats: $e')));
+      ).showSnackBar(SnackBar(content: Text('无法加载更多会话：$e')));
     }
   }
 
@@ -857,26 +856,26 @@ class _SessionListScreenState extends State<SessionListScreen> {
 
   Future<void> _confirmDeleteSession(Session session) async {
     final title = session.title.trim().isEmpty
-        ? 'Untitled session'
+        ? '未命名会话'
         : session.title;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete session?'),
+        title: const Text('删除会话？'),
         content: Text(
-          'Delete "$title" from the remote Hermes history? This cannot be undone.',
+          '从远程 Hermes 历史记录中删除“$title”？此操作无法撤销。',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(dialogContext).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Delete'),
+            child: const Text('删除'),
           ),
         ],
       ),
@@ -903,14 +902,14 @@ class _SessionListScreenState extends State<SessionListScreen> {
         _deletingSessionIds.remove(session.id);
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Session deleted from remote Hermes.')),
+        const SnackBar(content: Text('已从远程 Hermes 删除会话。')),
       );
     } catch (e) {
       if (!mounted) return;
       setState(() => _deletingSessionIds.remove(session.id));
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Could not delete session: $e')));
+      ).showSnackBar(SnackBar(content: Text('无法删除会话：$e')));
     }
   }
 
@@ -918,7 +917,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
     final sessionId = GatewayChatClient.generateSessionId();
     final session = Session(
       id: sessionId,
-      title: 'New Chat',
+      title: '新会话',
       model: 'hermes-agent',
       source: 'mobile',
       messageCount: 0,
@@ -960,14 +959,14 @@ class _SessionListScreenState extends State<SessionListScreen> {
 
   String get _spaceScopeLabel {
     return switch (_spaceScope.kind) {
-      ChatSpaceScopeKind.all => 'All chats',
-      ChatSpaceScopeKind.unassigned => 'Unassigned',
+      ChatSpaceScopeKind.all => '全部会话',
+      ChatSpaceScopeKind.unassigned => '未分配',
       ChatSpaceScopeKind.space =>
         _spaceState.spaces
                 .where((space) => space.id == _spaceScope.spaceId)
                 .map((space) => space.name)
                 .firstOrNull ??
-            'Space',
+            '空间',
     };
   }
 
@@ -1019,7 +1018,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
       ),
       drawer: _buildDrawer(),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'New Chat',
+        tooltip: '新会话',
         onPressed: _createNewSession,
         child: const Icon(Icons.chat, color: Colors.black),
       ),
@@ -1062,7 +1061,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ListTile(
               key: const Key('open-spaces'),
               leading: const Icon(Icons.folder_copy_outlined),
-              title: const Text('Spaces'),
+              title: const Text('空间'),
               subtitle: Text(_spaceScopeLabel),
               enabled: _spaceStore != null,
               onTap: () => _openSpaces(closeDrawer: true),
@@ -1070,8 +1069,8 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ListTile(
               key: const Key('open-workspace'),
               leading: const Icon(Icons.dashboard_outlined),
-              title: const Text('Workspace'),
-              subtitle: const Text('Projects, Activity — new navigation'),
+              title: const Text('工作区'),
+              subtitle: const Text('项目、动态 — 新导航'),
               onTap: () {
                 Navigator.pop(context);
                 _openScreen(
@@ -1087,26 +1086,26 @@ class _SessionListScreenState extends State<SessionListScreen> {
             const Divider(),
             ListTile(
               leading: const Icon(Icons.memory),
-              title: const Text('Memory'),
+              title: const Text('记忆'),
               onTap: () =>
                   _openScreen(MemoryScreen(connection: widget.connection)),
             ),
             ListTile(
               leading: const Icon(Icons.schedule),
-              title: const Text('Cron Jobs'),
+              title: const Text('定时任务'),
               onTap: () =>
                   _openScreen(CronScreen(connection: widget.connection)),
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome),
-              title: const Text('Skills'),
+              title: const Text('技能'),
               onTap: () =>
                   _openScreen(SkillsScreen(connection: widget.connection)),
             ),
             const Divider(),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              title: const Text('设置'),
               onTap: () =>
                   _openScreen(SettingsScreen(connection: widget.connection)),
             ),
@@ -1129,17 +1128,17 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Connecting to ${widget.connection.baseUrl}...',
+              '正在连接到 ${widget.connection.baseUrl}…',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Make sure the Gateway API Server is running\n(hermes gateway status)',
+              '请确保 Gateway API 服务正在运行\n(hermes gateway status)',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
-            ElevatedButton(onPressed: _checkHealth, child: const Text('Retry')),
+            ElevatedButton(onPressed: _checkHealth, child: const Text('重试')),
           ],
         ),
       );
@@ -1155,7 +1154,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             Icon(Icons.error_outline, size: 48, color: Colors.orange),
             const SizedBox(height: 16),
             Text(
-              'Connection issue',
+              '连接问题',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -1170,7 +1169,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _fetchSessions,
-              child: const Text('Retry'),
+              child: const Text('重试'),
             ),
           ],
         ),
@@ -1185,12 +1184,12 @@ class _SessionListScreenState extends State<SessionListScreen> {
             Icon(Icons.chat_bubble_outline, size: 48, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No sessions yet',
+              '暂无会话',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Tap the + button to start a new chat',
+              '点击右下角按钮开启新会话',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
@@ -1249,7 +1248,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                           dimension: 22,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Load more…'),
+                      : const Text('加载更多…'),
                 ),
               );
             }
@@ -1283,14 +1282,14 @@ class _SessionListScreenState extends State<SessionListScreen> {
                             )
                           : const Icon(Icons.search),
                       hintText: aiMode
-                          ? 'Ask AI to find a conversation'
+                          ? '让 AI 帮您查找会话'
                           : serverMode
-                          ? 'Search all message content'
-                          : 'Search loaded chats',
+                          ? '搜索全部消息内容'
+                          : '搜索已加载的会话',
                       trailing: [
                         if (rawQuery.isNotEmpty)
                           IconButton(
-                            tooltip: 'Clear search',
+                            tooltip: '清除搜索',
                             icon: const Icon(Icons.close),
                             onPressed: () {
                               _searchDebounceTimer?.cancel();
@@ -1307,7 +1306,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                           ),
                         if (aiMode)
                           IconButton(
-                            tooltip: 'Change AI search model',
+                            tooltip: '更换 AI 搜索模型',
                             icon: _loadingAiModels
                                 ? const SizedBox.square(
                                     dimension: 18,
@@ -1321,7 +1320,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                                 : _showAiModelSelector,
                           ),
                         PopupMenuButton<SessionSearchMode>(
-                          tooltip: 'Search mode',
+                          tooltip: '搜索模式',
                           icon: Icon(
                             aiMode
                                 ? Icons.auto_awesome
@@ -1337,8 +1336,8 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               child: const ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 leading: Icon(Icons.phone_android),
-                                title: Text('On-device'),
-                                subtitle: Text('Titles, previews, and models'),
+                                title: Text('设备本地'),
+                                subtitle: Text('标题、预览与模型'),
                               ),
                             ),
                             CheckedPopupMenuItem(
@@ -1348,8 +1347,8 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               child: const ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 leading: Icon(Icons.manage_search),
-                                title: Text('Full-text'),
-                                subtitle: Text('All stored message content'),
+                                title: Text('全文搜索'),
+                                subtitle: Text('存储的全部消息内容'),
                               ),
                             ),
                             CheckedPopupMenuItem(
@@ -1359,10 +1358,10 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               child: ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 leading: const Icon(Icons.auto_awesome),
-                                title: const Text('AI + full-text'),
+                                title: const Text('AI + 全文搜索'),
                                 subtitle: Text(
                                   _aiSearchModel == null
-                                      ? 'Choose a small model to rewrite queries'
+                                      ? '选择轻量模型改写查询'
                                       : '${_aiSearchModel!.provider} • ${_aiSearchModel!.model}',
                                 ),
                               ),
@@ -1386,7 +1385,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
-                              'AI searched for: $_aiRewrittenQuery',
+                              'AI 搜索关键词：$_aiRewrittenQuery',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodySmall,
@@ -1425,7 +1424,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               TextButton(
                                 onPressed: () =>
                                     _setSearchMode(SessionSearchMode.local),
-                                child: const Text('Use on-device'),
+                                child: const Text('使用设备本地搜索'),
                               ),
                             ],
                           ),
@@ -1437,8 +1436,8 @@ class _SessionListScreenState extends State<SessionListScreen> {
                       Center(
                         child: Text(
                           _spaceScope.kind == ChatSpaceScopeKind.space
-                              ? 'No chats in this space yet. Tap + to start one.'
-                              : 'No unassigned chats.',
+                              ? '该空间暂无会话。点击 + 开始新会话。'
+                              : '无未分配的会话。',
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -1450,7 +1449,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                         serverHitsCurrent != null &&
                         serverHitsCurrent.isEmpty) ...[
                       const SizedBox(height: 16),
-                      const Center(child: Text('No message-content matches')),
+                      const Center(child: Text('无匹配的消息内容')),
                     ],
                   ],
                 ),
@@ -1477,7 +1476,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : PopupMenuButton<String>(
-                        tooltip: 'Chat actions',
+                        tooltip: '会话操作',
                         onSelected: (action) =>
                             _handleSessionAction(action, session),
                         itemBuilder: (_) => [
@@ -1485,7 +1484,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                             value: 'move',
                             child: ListTile(
                               leading: Icon(Icons.drive_file_move_outline),
-                              title: Text('Move to space'),
+                              title: Text('移动至空间'),
                             ),
                           ),
                           if (_desktopGateway != null)
@@ -1493,7 +1492,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               value: 'rename',
                               child: ListTile(
                                 leading: Icon(Icons.edit_outlined),
-                                title: Text('Rename'),
+                                title: Text('重命名'),
                               ),
                             ),
                           if (_desktopGateway != null)
@@ -1501,14 +1500,14 @@ class _SessionListScreenState extends State<SessionListScreen> {
                               value: 'branch',
                               child: ListTile(
                                 leading: Icon(Icons.call_split_outlined),
-                                title: Text('Branch'),
+                                title: Text('分支'),
                               ),
                             ),
                           const PopupMenuItem(
                             value: 'delete',
                             child: ListTile(
                               leading: Icon(Icons.delete_outline),
-                              title: Text('Delete'),
+                              title: Text('删除'),
                             ),
                           ),
                         ],
@@ -1522,7 +1521,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${session.messageCount} msgs \u2022 ${session.model} \u2022 ${_formatTime(session.startedAt)}',
+                      '${session.messageCount} 条消息 \u2022 ${session.model} \u2022 ${_formatTime(session.startedAt)}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     if (searchHit?.snippet.isNotEmpty == true)

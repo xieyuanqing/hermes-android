@@ -62,7 +62,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Skills (${_skills.length})'),
+        title: Text('技能 (${_skills.length})'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -86,7 +86,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
               const Icon(Icons.error_outline, size: 48, color: Colors.orange),
               const SizedBox(height: 16),
               Text(
-                'Failed to load skills',
+                '无法加载技能',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -96,7 +96,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              ElevatedButton(onPressed: _load, child: const Text('Retry')),
+              ElevatedButton(onPressed: _load, child: const Text('重试')),
             ],
           ),
         ),
@@ -110,7 +110,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
             Icon(Icons.extension_off, size: 48, color: Colors.grey[600]),
             const SizedBox(height: 16),
             Text(
-              'No skills found',
+              '未发现技能',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ],

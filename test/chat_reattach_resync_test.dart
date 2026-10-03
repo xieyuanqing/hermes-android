@@ -66,7 +66,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Long running task');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
 
@@ -75,8 +75,7 @@ void main() {
       await tester.pump();
       expect(
         find.text(
-          'Connection switched — the running reply continues on the '
-          'server and will reattach automatically.',
+          '连接已切换 — 正在运行的回复仍在服务器上继续，并将自动重新关联。',
         ),
         findsOneWidget,
       );
@@ -172,7 +171,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Slow settling turn');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
 
@@ -248,7 +247,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Long running task');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
       hook.handler?.call(DesktopConnectionState.reconnecting);
@@ -330,7 +329,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Long running task');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
 
@@ -435,7 +434,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Long running task');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pump();
       hook.handler?.call(DesktopConnectionState.reconnecting);
@@ -503,7 +502,7 @@ void main() {
     hook.handler?.call(DesktopConnectionState.connected);
     await tester.pump();
     await tester.enterText(find.byType(TextField), 'Long running task');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     await tester.pump();
 
@@ -581,7 +580,7 @@ void main() {
     hook.handler?.call(DesktopConnectionState.connected);
     await tester.pump();
     await tester.enterText(find.byType(TextField), 'Long running task');
-    await tester.tap(find.byTooltip('Send'));
+    await tester.tap(find.byTooltip('发送'));
     await tester.pump();
     await tester.pump();
 
@@ -650,7 +649,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Plain failure');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       await tester.pumpAndSettle();
 
@@ -696,7 +695,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Detached failure');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       hook.handler?.call(DesktopConnectionState.reconnecting);
       await tester.pump();
@@ -724,10 +723,10 @@ void main() {
         isNull,
         reason: 'model changes must not race the authoritative history fetch',
       );
-      await tester.tap(find.byTooltip('Chat actions'));
+      await tester.tap(find.byTooltip('会话操作'));
       await tester.pumpAndSettle();
       final refreshItem = find.ancestor(
-        of: find.text('Refresh'),
+        of: find.text('刷新'),
         matching: find.byType(PopupMenuItem<String>),
       );
       expect(
@@ -800,7 +799,7 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Generation A');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       hook.handler?.call(DesktopConnectionState.reconnecting);
       submissions.single.completeError(
@@ -821,7 +820,7 @@ void main() {
       await tester.pump();
 
       await tester.enterText(find.byType(TextField), 'Generation B');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       expect(submissions, hasLength(2));
       hook.handler?.call(DesktopConnectionState.reconnecting);
@@ -880,12 +879,12 @@ void main() {
       hook.handler?.call(DesktopConnectionState.connected);
       await tester.pump();
       await tester.enterText(find.byType(TextField), 'Binding phase');
-      await tester.tap(find.byTooltip('Send'));
+      await tester.tap(find.byTooltip('发送'));
       await tester.pump();
       hook.handler?.call(DesktopConnectionState.reconnecting);
       await tester.pump();
 
-      expect(find.textContaining('will reattach automatically'), findsNothing);
+      expect(find.textContaining('自动重新关联'), findsNothing);
       beforeWire.completeError(
         JsonRpcError('session.resume', 'Desktop gateway connection closed'),
       );
@@ -936,8 +935,7 @@ void main() {
     // Idle drop: no snackbar, no extra ensure, no extra history fetch.
     expect(
       find.text(
-        'Connection switched — the running reply continues on the '
-        'server and will reattach automatically.',
+        '连接已切换 — 正在运行的回复仍在服务器上继续，并将自动重新关联。',
       ),
       findsNothing,
     );

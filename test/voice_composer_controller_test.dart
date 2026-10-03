@@ -23,6 +23,7 @@ void main() {
       addTearDown(editor.dispose);
 
       expect(await controller.start(), isTrue);
+      expect(controller.status, '正在聆听');
       adapter.emitPartial('new');
       expect(editor.text, 'Alpha new omega');
       adapter.emitPartial('new words');
@@ -33,6 +34,7 @@ void main() {
       expect(editor.text, 'Alpha new words final omega');
       expect(editor.selection, const TextSelection.collapsed(offset: 21));
       expect(controller.listening, isFalse);
+      expect(controller.status, '听写已就绪，可进行编辑');
       expect(adapter.stopCount, 1);
 
       editor.text = '${editor.text}!';
@@ -197,4 +199,48 @@ void main() {
     expect(adapter.disposeCount, 1);
     await tester.pump(const Duration(seconds: 3));
   });
+
+  testWidgets('reports unavailable and setup failure statuses in Chinese', (
+    tester,
+  ) async {
+    final editor = TextEditingController(text: 'draft');
+    final unavailableAdapter = FakeVoiceComposerAdapter(
+      initializationSucceeds: false,
+    );
+    final unavailableController = VoiceComposerController(
+      textController: editor,
+      adapter: unavailableAdapter,
+    );
+    addTearDown(unavailableController.dispose);
+    addTearDown(editor.dispose);
+
+    expect(
+      await unavailableController.initialize(requestPermission: true),
+      isFalse,
+    );
+    expect(unavailableController.status, '语音识别不可用');
+
+    final failingAdapter = _FailingVoiceComposerAdapter();
+    final failingController = VoiceComposerController(
+      textController: editor,
+      adapter: failingAdapter,
+    );
+    addTearDown(failingController.dispose);
+
+    expect(
+      await failingController.initialize(requestPermission: true),
+      isFalse,
+    );
+    expect(failingController.status, contains('语音设置失败：'));
+  });
+}
+
+class _FailingVoiceComposerAdapter extends FakeVoiceComposerAdapter {
+  @override
+  Future<bool> initialize({
+    required VoiceStatusCallback onStatus,
+    required VoiceErrorCallback onError,
+  }) async {
+    throw Exception('audio engine failed');
+  }
 }
