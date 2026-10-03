@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hermes_android/core/controllers/voice_composer_controller.dart';
+import 'package:hermes_android/core/services/voice_composer_adapter.dart';
 
 import 'support/fake_voice_composer_adapter.dart';
 

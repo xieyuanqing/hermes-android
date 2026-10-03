@@ -127,7 +127,7 @@ void main() {
       }
     });
 
-    await app.main();
+    app.main();
     await tester.pumpAndSettle();
     expect(find.text('Hermes 无法加载您保存的连接'), findsOneWidget);
     expect(find.text('重置已保存连接'), findsOneWidget);

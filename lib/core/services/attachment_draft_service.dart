@@ -92,7 +92,7 @@ class AttachmentDraftSendCoordinator {
         .toList(growable: false);
     if (refs.length != snapshot.length) {
       throw const AttachmentDraftException(
-        'Every attachment must have a gateway reference before prompt submit.',
+        '提交提示词前，每个附件都必须具备 Gateway 引用。',
       );
     }
     await submitPrompt(refs);
@@ -150,12 +150,12 @@ class AttachmentDraftService {
     final stat = await source.stat();
     if (stat.type != FileSystemEntityType.file || stat.size <= 0) {
       throw const AttachmentDraftException(
-        'The selected image is empty or unreadable.',
+        '所选图片为空或不可读。',
       );
     }
     if (stat.size > maxRemoteAttachmentDraftBytes) {
       throw const AttachmentDraftException(
-        'The selected image exceeds the 64 MiB draft budget.',
+        '所选图片超出 64 MiB 草稿预算。',
       );
     }
     if (mode == AttachmentDraftMode.remoteGateway) {
@@ -171,14 +171,14 @@ class AttachmentDraftService {
       final format = _detectImageFormat(sourceBytes);
       if (format == null) {
         throw const AttachmentDraftException(
-          'Unsupported image format. Choose a JPEG, PNG, or WebP image.',
+          '不支持的图片格式。请选择 JPEG、PNG 或 WebP 图片。',
         );
       }
       decoded = image_lib.decodeImage(sourceBytes);
       sourceBytes = null;
       if (decoded == null) {
         throw const AttachmentDraftException(
-          'The selected JPEG, PNG, or WebP image could not be decoded safely.',
+          '无法安全解码所选的 JPEG、PNG 或 WebP 图片。',
         );
       }
 
@@ -199,7 +199,7 @@ class AttachmentDraftService {
       if (mode == AttachmentDraftMode.rest &&
           outputLength > maxRestImageBytes) {
         throw const AttachmentDraftException(
-          'The sanitized image is too large for the legacy REST limit.',
+          '净化后的图片超出传统 REST 限制。',
         );
       }
       if (mode == AttachmentDraftMode.remoteGateway) {
@@ -227,7 +227,7 @@ class AttachmentDraftService {
       rethrow;
     } catch (_) {
       throw const AttachmentDraftException(
-        'Unable to sanitize this image. Choose a valid JPEG, PNG, or WebP image.',
+        '无法净化此图片。请选择有效的 JPEG、PNG 或 WebP 图片。',
       );
     } finally {
       sourceBytes = null;
@@ -247,19 +247,19 @@ class AttachmentDraftService {
     _ensureRemoteSlot(existingDrafts);
     if (isSensitiveFileName(displayName)) {
       throw const AttachmentDraftException(
-        'This filename is blocked because it may contain credentials.',
+        '此文件名已被拦截，因其可能包含凭据。',
       );
     }
     final source = File(sourcePath);
     final stat = await source.stat();
     if (stat.type != FileSystemEntityType.file || stat.size <= 0) {
       throw const AttachmentDraftException(
-        'The selected file is empty or unreadable.',
+        '所选文件为空或不可读。',
       );
     }
     if (stat.size > maxGenericAttachmentBytes) {
       throw const AttachmentDraftException(
-        'Generic files are limited to 16 MiB each.',
+        '常规文件单项限制为 16 MiB。',
       );
     }
     _ensureRemoteAggregate(existingDrafts, stat.size);
@@ -270,7 +270,7 @@ class AttachmentDraftService {
       final copiedSize = await destination.length();
       if (copiedSize != stat.size) {
         throw const AttachmentDraftException(
-          'The selected file could not be copied completely.',
+          '所选文件未能完整复制。',
         );
       }
       return AttachmentDraft(
@@ -291,25 +291,25 @@ class AttachmentDraftService {
     final snapshot = drafts.toList(growable: false);
     if (snapshot.length > maxRemoteAttachmentDrafts) {
       throw const AttachmentDraftException(
-        'You can attach up to 10 items to one Remote Gateway draft.',
+        '单个 Remote Gateway 草稿最多可添加 10 项附件。',
       );
     }
     final total = snapshot.fold<int>(0, (sum, draft) => sum + draft.byteLength);
     if (total > maxRemoteAttachmentDraftBytes) {
       throw const AttachmentDraftException(
-        'Attachments are limited to 64 MiB total per draft.',
+        '每个草稿的附件总容量限制为 64 MiB。',
       );
     }
     for (final draft in snapshot) {
       if (draft.kind == AttachmentDraftKind.genericFile &&
           draft.byteLength > maxGenericAttachmentBytes) {
         throw const AttachmentDraftException(
-          'Generic files are limited to 16 MiB each.',
+          '常规文件单项限制为 16 MiB。',
         );
       }
       if (draft.isImage && !draft.sanitized) {
         throw const AttachmentDraftException(
-          'Remote images must be sanitized before upload.',
+          '远程图片上传前必须经过净化。',
         );
       }
     }
@@ -320,12 +320,12 @@ class AttachmentDraftService {
     if (snapshot.length > 1 ||
         snapshot.any((draft) => !draft.isImage || !draft.sanitized)) {
       throw const AttachmentDraftException(
-        'Legacy REST accepts exactly one sanitized image at most.',
+        '传统 REST 最多只接受一张净化后的图片。',
       );
     }
     if (snapshot.isNotEmpty && snapshot.single.byteLength > maxRestImageBytes) {
       throw const AttachmentDraftException(
-        'The sanitized image exceeds the legacy REST limit.',
+        '净化后的图片超出传统 REST 限制。',
       );
     }
   }
@@ -393,7 +393,7 @@ class AttachmentDraftService {
   }) async {
     if (draft.status != AttachmentDraftStatus.failed) {
       throw const AttachmentDraftException(
-        'Only a failed attachment can be retried.',
+        '仅可重试失败的附件。',
       );
     }
     return _uploadOne(draft, upload: upload, onChanged: onChanged);
@@ -468,7 +468,7 @@ class AttachmentDraftService {
   void _ensureRemoteSlot(Iterable<AttachmentDraft> drafts) {
     if (drafts.length >= maxRemoteAttachmentDrafts) {
       throw const AttachmentDraftException(
-        'You can attach up to 10 items to one Remote Gateway draft.',
+        '单个 Remote Gateway 草稿最多可添加 10 项附件。',
       );
     }
   }
@@ -480,7 +480,7 @@ class AttachmentDraftService {
     final current = drafts.fold<int>(0, (sum, draft) => sum + draft.byteLength);
     if (current + candidateBytes > maxRemoteAttachmentDraftBytes) {
       throw const AttachmentDraftException(
-        'Attachments are limited to 64 MiB total per draft.',
+        '每个草稿的附件总容量限制为 64 MiB。',
       );
     }
   }

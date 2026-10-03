@@ -1218,7 +1218,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   Future<String> _moveUnassignedChat(Session session) async {
     final repository = _repository;
     if (repository == null) {
-      throw StateError('Projects are unavailable for this connection');
+      throw StateError('此连接不支持项目');
     }
     var view = repository.current;
     if (view.support == ProjectsSupport.unknown) {
@@ -1228,7 +1228,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
         .where((project) => !project.archived)
         .toList(growable: false);
     if (projects.isEmpty) {
-      throw StateError('Create a Project before moving this chat');
+      throw StateError('移动此会话前请先创建项目');
     }
 
     if (!mounted) throw const QuickChatPromotionCancelled();
@@ -1259,7 +1259,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   Future<String> _promoteQuickChat(Session session) async {
     final repository = _repository;
     if (repository == null) {
-      throw StateError('Projects are unavailable for this connection');
+      throw StateError('此连接不支持项目');
     }
     var view = repository.current;
     if (view.support == ProjectsSupport.unknown) {
@@ -1269,7 +1269,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
         .where((project) => !project.archived)
         .toList(growable: false);
     if (projects.isEmpty) {
-      throw StateError('Create a Project before promoting this chat');
+      throw StateError('提升此会话前请先创建项目');
     }
 
     if (!mounted) throw const QuickChatPromotionCancelled();

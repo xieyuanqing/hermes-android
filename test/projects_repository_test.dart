@@ -1262,7 +1262,7 @@ void main() {
 
         final reason = await repo.moveSessionToProject('s-1', null);
 
-        expect(reason, contains('cannot move a chat back to Unassigned'));
+        expect(reason, contains('无法将会话移回“未分配”'));
         expect(gateway.workspaceMoves, isEmpty);
       },
     );
@@ -1276,7 +1276,7 @@ void main() {
 
       final reason = await repo.moveSessionToProject('s-1', 'p1');
 
-      expect(reason, contains('no folder'));
+      expect(reason, contains('没有可迁入会话的文件夹'));
       expect(gateway.workspaceMoves, isEmpty);
     });
 

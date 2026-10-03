@@ -132,7 +132,7 @@ void main() {
         isA<SessionSearchException>().having(
           (e) => e.message,
           'message',
-          contains('credentials'),
+          contains('凭据'),
         ),
       ),
     );
@@ -147,7 +147,7 @@ void main() {
         isA<SessionSearchException>().having(
           (e) => e.message,
           'message',
-          contains('does not expose session search'),
+          contains('不支持会话搜索'),
         ),
       ),
     );
@@ -177,7 +177,7 @@ void main() {
           isA<SessionSearchException>().having(
             (e) => e.message,
             'message',
-            contains('malformed'),
+            contains('格式错误'),
           ),
         ),
       );

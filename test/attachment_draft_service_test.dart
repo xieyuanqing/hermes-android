@@ -207,7 +207,7 @@ void main() {
             isA<AttachmentDraftException>().having(
               (error) => error.message,
               'message',
-              contains('Unsupported image format'),
+              contains('不支持的图片格式'),
             ),
           ),
         );

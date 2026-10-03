@@ -592,14 +592,12 @@ class ProjectsRepository {
     if (projectId == null) {
       // There is no stock RPC to un-file a chat: its project is wherever
       // its cwd points. Say so instead of failing with a generic error.
-      return 'This gateway files chats by working folder and cannot move a '
-          'chat back to Unassigned.';
+      return '此 Gateway 通过工作目录对会话归类，无法将会话移回“未分配”。';
     }
     final target = _findProject(projectId);
     final folder = target?.workingDirectory?.trim() ?? '';
     if (target == null || folder.isEmpty) {
-      return 'That Project has no folder to move the chat into. Add a '
-          'folder to it first.';
+      return '该项目没有可迁入会话的文件夹。请先为其添加文件夹。';
     }
     await client.moveSessionWorkspace(
       sessionKey: (storedSessionKey?.trim().isNotEmpty ?? false)
@@ -939,7 +937,7 @@ class ProjectsRepository {
         if (folder.isEmpty) {
           unlinkedSessions++;
           failures['${entry.space.name}/$sessionId'] = StateError(
-            'Project ${entry.space.name} has no folder to re-home chats into.',
+            '项目 ${entry.space.name} 没有可迁入会话的文件夹。',
           );
           continue;
         }

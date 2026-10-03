@@ -81,7 +81,7 @@ void main() {
         isA<AiSearchRewriteException>().having(
           (e) => e.message,
           'message',
-          contains('Choose an AI search model'),
+          contains('选择 AI 搜索模型'),
         ),
       ),
     );
@@ -124,7 +124,7 @@ void main() {
         isA<AiSearchRewriteException>().having(
           (e) => e.message,
           'message',
-          contains('API key'),
+          contains('API 密钥'),
         ),
       ),
     );
@@ -166,7 +166,7 @@ void main() {
         isA<AiSearchRewriteException>().having(
           (e) => e.message,
           'message',
-          contains('malformed'),
+          contains('格式错误'),
         ),
       ),
     );
